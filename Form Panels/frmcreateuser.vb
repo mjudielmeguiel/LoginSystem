@@ -1,0 +1,144 @@
+﻿Imports MySql.Data.MySqlClient
+
+Public Class frmcreateuser
+
+    Private Sub frmcreateuser_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.TopMost = True
+        frmMain.Enabled = False
+
+        cboRole.Items.AddRange({
+            "Administrator", "System Admin", "Manager", "Supervisor",
+            "Staff", "Office Staff", "Encoder", "Clerk",
+            "Security", "Security Guard", "Receptionist",
+            "Cashier", "Accounting", "Auditor", "HR Staff",
+            "IT Support", "Technician", "Maintenance",
+            "Driver", "Inventory Staff", "Nurse", "Medical Staff"
+        })
+        If cboRole.Items.Count > 0 Then cboRole.SelectedIndex = 0
+    End Sub
+
+    Private Sub txtConfirmPass_TextChanged(sender As Object, e As EventArgs) Handles txtConfirmPass.TextChanged, txtPassword.TextChanged
+        If String.IsNullOrWhiteSpace(txtPassword.Text) AndAlso String.IsNullOrWhiteSpace(txtConfirmPass.Text) Then
+            lblPassStatus.Text = ""
+            lblPassStatus.ForeColor = Color.Black
+            Return
+        End If
+
+        If txtPassword.Text.Trim() = txtConfirmPass.Text.Trim() Then
+            lblPassStatus.Text = "✓ Password Match"
+            lblPassStatus.ForeColor = Color.Green
+        Else
+            lblPassStatus.Text = "✗ Password does not match"
+            lblPassStatus.ForeColor = Color.Red
+        End If
+    End Sub
+
+    Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+        If String.IsNullOrWhiteSpace(txtLastname.Text) OrElse
+           String.IsNullOrWhiteSpace(txtFirstname.Text) OrElse
+           String.IsNullOrWhiteSpace(txtUsername.Text) OrElse
+           cboRole.SelectedIndex = -1 OrElse
+           String.IsNullOrWhiteSpace(txtPassword.Text) OrElse
+           String.IsNullOrWhiteSpace(txtConfirmPass.Text) Then
+
+            MsgBox("Please fill all fields!", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        If txtPassword.Text.Trim() <> txtConfirmPass.Text.Trim() Then
+            MsgBox("Password does not match!", MsgBoxStyle.Exclamation)
+            Return
+        End If
+
+        Dim fullName As String = $"{txtLastname.Text.Trim()}, {txtFirstname.Text.Trim()}"
+        Dim adminDeptID As Integer = 0
+
+        Try
+            connection()
+
+            sql = "SELECT AdminID FROM admin WHERE FullName=@adminname"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@adminname", LoggedFullname)
+            dr = cmd.ExecuteReader()
+
+            If Not dr.HasRows Then
+                dr.Close()
+                MsgBox("Access Denied! Only Admin can add users.", MsgBoxStyle.Exclamation)
+                Call DBconnection.CloseConnection()
+                Return
+            End If
+            dr.Close()
+
+            sql = "SELECT AdminID FROM admin WHERE FullName=@adminname"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@adminname", LoggedFullname)
+            dr = cmd.ExecuteReader()
+
+            If dr.Read() Then
+                adminDeptID = Convert.ToInt32(dr("AdminID"))
+            End If
+            dr.Close()
+
+            sql = "SELECT FullName FROM users WHERE FullName=@fullname"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@fullname", fullName)
+            dr = cmd.ExecuteReader()
+
+            If dr.HasRows Then
+                dr.Close()
+                MsgBox("Full Name already exists!", MsgBoxStyle.Exclamation)
+                Call DBconnection.CloseConnection()
+                Return
+            End If
+            dr.Close()
+
+            sql = "INSERT INTO users (Lastname, Firstname, FullName, Username, Password, Role, AccountStatus, LoginAttempts, DepartmentID) 
+                   VALUES (@lname, @fname, @fullname, @uname, @pass, @role, 'Active', 0, @deptid)"
+
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@lname", txtLastname.Text.Trim())
+            cmd.Parameters.AddWithValue("@fname", txtFirstname.Text.Trim())
+            cmd.Parameters.AddWithValue("@fullname", fullName)
+            cmd.Parameters.AddWithValue("@uname", txtUsername.Text.Trim())
+            cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
+            cmd.Parameters.AddWithValue("@role", cboRole.Text)
+            cmd.Parameters.AddWithValue("@deptid", adminDeptID)
+
+            cmd.ExecuteNonQuery()
+            MsgBox("Successfully Registered!", MsgBoxStyle.Information)
+
+            ClearForm()
+
+        Catch ex As MySqlException
+            If ex.Number = 1062 Then
+                MsgBox("Username already exists! Please use another username.", MsgBoxStyle.Critical)
+            Else
+                MsgBox("Database Error: " & ex.Message, MsgBoxStyle.Critical)
+            End If
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical)
+        Finally
+            CloseConnection()
+        End Try
+    End Sub
+
+    Private Sub ClearForm()
+        txtLastname.Clear()
+        txtFirstname.Clear()
+        txtUsername.Clear()
+        txtPassword.Clear()
+        txtConfirmPass.Clear()
+        cboRole.SelectedIndex = 0
+        lblPassStatus.Text = ""
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        If MsgBox("Are you sure want to Cancel", vbYesNo, MsgBoxStyle.Question) = vbYes Then
+            ClearForm()
+            Me.Hide()
+            frmMain.Enabled = True
+            frmMain.TopMost = True
+            Me.TopMost = False
+        End If
+    End Sub
+End Class
