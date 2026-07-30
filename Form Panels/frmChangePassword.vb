@@ -105,8 +105,8 @@ Public Class frmChangePassword
     End Sub
 
     Private Sub frmChangePassword_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lblPassStatus.Text = ""
         Me.TopMost = True
         frmMain.Enabled = False
+        lblPassStatus.Text = ""
     End Sub
 End Class

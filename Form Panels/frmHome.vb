@@ -3,65 +3,53 @@
 Public Class frmHome
 
     Private Sub frmHome_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadAdminInfo()
-        LoadDashboardCounts()
+        LoadUserInfoAndCounts()
         lblDateTime.Text = DateTime.Now.ToString("F")
     End Sub
 
-    Private Sub LoadAdminInfo()
+    Private Sub LoadUserInfoAndCounts()
         Try
             connection()
+            Dim deptID As Integer = 0
+            Dim deptName As String = ""
 
-            lblWelcome.Text = "Welcome - " & LoggedFullname
-
-            cmd = New MySqlCommand("SELECT Department, FullName FROM admin WHERE FullName=@name", cn)
+            sql = "SELECT AdminID, Department FROM admin WHERE FullName=@name"
+            cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@name", LoggedFullname)
             dr = cmd.ExecuteReader()
 
             If dr.Read() Then
-                lblDept.Text = dr("Department").ToString()
-                lblWelcome.Text = "Welcome - " & dr("FullName").ToString()
+                deptID = Convert.ToInt32(dr("AdminID"))
+                deptName = dr("Department").ToString()
+            Else
+                dr.Close()
+                sql = "SELECT DepartmentID FROM users WHERE FullName=@name"
+                cmd = New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@name", LoggedFullname)
+                dr = cmd.ExecuteReader()
+                If dr.Read() Then
+                    deptID = Convert.ToInt32(dr("DepartmentID"))
+                End If
             End If
             dr.Close()
 
-        Catch ex As Exception
-            MsgBox("Error loading data: " & ex.Message, MsgBoxStyle.Critical)
-        Finally
-            CloseConnection()
-        End Try
-    End Sub
+            lblWelcome.Text = "Welcome - " & LoggedFullname
+            lblDept.Text = deptName
 
-    Private Sub LoadDashboardCounts()
-        Try
-            connection()
-            Dim adminDeptID As Integer = 0
-
-            ' Kunin muna ang DepartmentID ng Admin
-            sql = "SELECT AdminID FROM admin WHERE FullName=@adminname"
-            cmd = New MySqlCommand(sql, cn)
-            cmd.Parameters.AddWithValue("@adminname", LoggedFullname)
-            dr = cmd.ExecuteReader()
-
-            If dr.Read() Then
-                adminDeptID = Convert.ToInt32(dr("AdminID"))
-            End If
-            dr.Close()
-
-            ' Bilangin lang ang mga User na nasa parehong DepartmentID
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@deptid", cn)
-            cmd.Parameters.AddWithValue("@deptid", adminDeptID)
+            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept", cn)
+            cmd.Parameters.AddWithValue("@dept", deptID)
             lblTotalUsers.Text = cmd.ExecuteScalar().ToString()
 
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@deptid AND AccountStatus = 'Active'", cn)
-            cmd.Parameters.AddWithValue("@deptid", adminDeptID)
+            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept AND AccountStatus='Active'", cn)
+            cmd.Parameters.AddWithValue("@dept", deptID)
             lblActiveUsers.Text = cmd.ExecuteScalar().ToString()
 
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@deptid AND AccountStatus = 'Locked'", cn)
-            cmd.Parameters.AddWithValue("@deptid", adminDeptID)
+            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept AND AccountStatus='Locked'", cn)
+            cmd.Parameters.AddWithValue("@dept", deptID)
             lblLockedAccounts.Text = cmd.ExecuteScalar().ToString()
 
         Catch ex As Exception
-            MsgBox("Error loading counts: " & ex.Message, MsgBoxStyle.Critical)
+            MsgBox("Error loading data: " & ex.Message, MsgBoxStyle.Critical)
         Finally
             CloseConnection()
         End Try

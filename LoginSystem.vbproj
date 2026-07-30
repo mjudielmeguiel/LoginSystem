@@ -144,12 +144,6 @@
     <Compile Include="Form Panels\frmHome.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form Panels\frmInformation.Designer.vb">
-      <DependentUpon>frmInformation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form Panels\frmInformation.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form Panels\frmuserInformation.Designer.vb">
       <DependentUpon>frmuserInformation.vb</DependentUpon>
     </Compile>
@@ -166,12 +160,6 @@
       <DependentUpon>frmcreateuser.vb</DependentUpon>
     </Compile>
     <Compile Include="Form Panels\frmcreateuser.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form Panels\frmforgotpassword.Designer.vb">
-      <DependentUpon>frmforgotpassword.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form Panels\frmforgotpassword.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmlogin.Designer.vb">
@@ -210,9 +198,6 @@
     <EmbeddedResource Include="Form Panels\frmHome.resx">
       <DependentUpon>frmHome.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form Panels\frmInformation.resx">
-      <DependentUpon>frmInformation.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form Panels\frmuserInformation.resx">
       <DependentUpon>frmuserInformation.vb</DependentUpon>
     </EmbeddedResource>
@@ -221,9 +206,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form Panels\frmcreateuser.resx">
       <DependentUpon>frmcreateuser.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form Panels\frmforgotpassword.resx">
-      <DependentUpon>frmforgotpassword.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmlogin.resx">
       <DependentUpon>frmlogin.vb</DependentUpon>

@@ -82,7 +82,7 @@ Public Class frmlogin
                 Call DBconnection.CloseConnection()
                 Call LoginAdmin()
             Else
-                lblError.Text = "⚠ User does not exist."
+                lblError.Text = "User does not exist."
                 dr.Close()
                 Call DBconnection.CloseConnection()
             End If

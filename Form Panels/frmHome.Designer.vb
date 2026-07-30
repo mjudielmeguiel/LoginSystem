@@ -71,7 +71,7 @@ Partial Class frmHome
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.lblTotalUsers)
         Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Location = New System.Drawing.Point(49, 112)
+        Me.Panel1.Location = New System.Drawing.Point(49, 140)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(237, 113)
         Me.Panel1.TabIndex = 165
@@ -92,7 +92,7 @@ Partial Class frmHome
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel2.Controls.Add(Me.lblActiveUsers)
         Me.Panel2.Controls.Add(Me.Label3)
-        Me.Panel2.Location = New System.Drawing.Point(328, 112)
+        Me.Panel2.Location = New System.Drawing.Point(328, 140)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(237, 113)
         Me.Panel2.TabIndex = 167
@@ -124,7 +124,7 @@ Partial Class frmHome
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel3.Controls.Add(Me.lblLockedAccounts)
         Me.Panel3.Controls.Add(Me.Label6)
-        Me.Panel3.Location = New System.Drawing.Point(607, 112)
+        Me.Panel3.Location = New System.Drawing.Point(607, 140)
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(237, 113)
         Me.Panel3.TabIndex = 168
@@ -154,11 +154,11 @@ Partial Class frmHome
         'lblWelcome
         '
         Me.lblWelcome.AutoSize = True
-        Me.lblWelcome.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblWelcome.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblWelcome.ForeColor = System.Drawing.Color.Navy
         Me.lblWelcome.Location = New System.Drawing.Point(43, 64)
         Me.lblWelcome.Name = "lblWelcome"
-        Me.lblWelcome.Size = New System.Drawing.Size(27, 36)
+        Me.lblWelcome.Size = New System.Drawing.Size(20, 26)
         Me.lblWelcome.TabIndex = 169
         Me.lblWelcome.Text = "-"
         '

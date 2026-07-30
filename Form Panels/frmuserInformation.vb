@@ -118,4 +118,7 @@ Public Class frmuserInformation
         End Try
     End Sub
 
+    Private Sub btnnewadmin_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class

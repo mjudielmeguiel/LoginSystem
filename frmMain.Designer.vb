@@ -24,12 +24,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.mainLabel = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Menupanel = New System.Windows.Forms.Panel()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button6 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -42,7 +41,7 @@ Partial Class frmMain
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Panel1.Controls.Add(Me.Label4)
+        Me.Panel1.Controls.Add(Me.mainLabel)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.btnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
@@ -51,16 +50,16 @@ Partial Class frmMain
         Me.Panel1.Size = New System.Drawing.Size(1366, 48)
         Me.Panel1.TabIndex = 0
         '
-        'Label4
+        'mainLabel
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.Navy
-        Me.Label4.Location = New System.Drawing.Point(60, 9)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(216, 26)
-        Me.Label4.TabIndex = 162
-        Me.Label4.Text = "ADMIN DASHBOARD"
+        Me.mainLabel.AutoSize = True
+        Me.mainLabel.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.mainLabel.ForeColor = System.Drawing.Color.Navy
+        Me.mainLabel.Location = New System.Drawing.Point(60, 9)
+        Me.mainLabel.Name = "mainLabel"
+        Me.mainLabel.Size = New System.Drawing.Size(216, 26)
+        Me.mainLabel.TabIndex = 162
+        Me.mainLabel.Text = "ADMIN DASHBOARD"
         '
         'Button1
         '
@@ -102,7 +101,6 @@ Partial Class frmMain
         '
         Me.Menupanel.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Menupanel.Controls.Add(Me.Button4)
-        Me.Menupanel.Controls.Add(Me.Button6)
         Me.Menupanel.Controls.Add(Me.Button5)
         Me.Menupanel.Controls.Add(Me.Button7)
         Me.Menupanel.Controls.Add(Me.Button3)
@@ -123,31 +121,13 @@ Partial Class frmMain
         Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button4.ForeColor = System.Drawing.Color.DarkBlue
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(0, 195)
+        Me.Button4.Location = New System.Drawing.Point(0, 156)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(54, 39)
         Me.Button4.TabIndex = 147
         Me.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
         Me.Button4.UseVisualStyleBackColor = False
-        '
-        'Button6
-        '
-        Me.Button6.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button6.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button6.FlatAppearance.BorderSize = 0
-        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
-        Me.Button6.Location = New System.Drawing.Point(0, 156)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(54, 39)
-        Me.Button6.TabIndex = 144
-        Me.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button6.UseVisualStyleBackColor = False
         '
         'Button5
         '
@@ -258,9 +238,8 @@ Partial Class frmMain
     Friend WithEvents Button2 As Button
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Button7 As Button
-    Friend WithEvents Button6 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Button4 As Button
-    Friend WithEvents Label4 As Label
+    Friend WithEvents mainLabel As Label
     Friend WithEvents Button5 As Button
 End Class

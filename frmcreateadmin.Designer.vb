@@ -105,6 +105,7 @@ Partial Class frmcreateadmin
         Me.txtPassword.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPassword.Location = New System.Drawing.Point(446, 364)
         Me.txtPassword.Name = "txtPassword"
+        Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtPassword.Size = New System.Drawing.Size(344, 28)
         Me.txtPassword.TabIndex = 152
@@ -115,6 +116,7 @@ Partial Class frmcreateadmin
         Me.txtConfirmPass.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtConfirmPass.Location = New System.Drawing.Point(446, 441)
         Me.txtConfirmPass.Name = "txtConfirmPass"
+        Me.txtConfirmPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.txtConfirmPass.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtConfirmPass.Size = New System.Drawing.Size(344, 28)
         Me.txtConfirmPass.TabIndex = 154
