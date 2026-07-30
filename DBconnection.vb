@@ -6,7 +6,6 @@ Module DBconnection
     Public dr As MySqlDataReader
     Public sql As String
     Public LoggedFullname As String
-    ' ✅ DAGDAG: Ito ang nawawala kaya may error
     Public LoggedRole As String = ""
 
     Public Sub connection()
@@ -17,7 +16,7 @@ Module DBconnection
 
             cn.ConnectionString = "server=localhost;user=root;password=;database=logindb"
             cn.Open()
-            MsgBox("Connection Success!", MsgBoxStyle.Information) ' ✅ PINANATILING GAYA NG GUSTO MO
+            MsgBox("Connection Success!", MsgBoxStyle.Information)
         Catch ex As Exception
             MsgBox("Connection Failed: " & ex.Message, MsgBoxStyle.Critical)
         End Try

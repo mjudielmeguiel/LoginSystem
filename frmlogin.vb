@@ -58,7 +58,7 @@ Public Class frmlogin
             lblAttempts.Text = If(IsDBNull(dr("LoginAttempts")), 0, dr("LoginAttempts")).ToString()
 
             If dr("AccountStatus").ToString().Trim() = "Locked" Then
-                lblError.Text = "⚠ Your account is locked/deactivated."
+                lblError.Text = "Your account is locked/deactivated."
                 dr.Close()
                 CloseConnection()
                 Exit Sub
@@ -143,7 +143,7 @@ Public Class frmlogin
             UpdateAttempts()
 
             If currentAttempts >= 3 Then
-                lblError.Text = "⚠ 3 failed attempts reached. Account locked."
+                lblError.Text = "3 failed attempts reached. Account locked."
                 DeactAccts()
             Else
                 lblError.Text = $"✗ Incorrect Password. Attempt {currentAttempts} of 3."

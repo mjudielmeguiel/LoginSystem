@@ -5,10 +5,8 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Menupanel.Visible = False
 
-        ' Ipakita ang Role ng naka-login
         lblUserRole.Text = $"{LoggedRole.ToUpper()}"
 
-        ' Itago ang mga button kung hindi Admin
         Select Case LoggedRole.ToUpper()
             Case "ADMINISTRATOR", "SYSTEM ADMIN"
                 Button3.Visible = True
@@ -18,7 +16,6 @@ Public Class frmMain
                 Button7.Visible = False
         End Select
 
-        ' Ipakita ang Home form
         Panel2.Controls.Clear()
         Dim Home As New frmHome
         Home.TopLevel = False
