@@ -35,8 +35,8 @@ LoginSystem-master/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/LoginSystem.git
-```
+[git clone https://github.com/your-username/LoginSystem.git
+```](https://github.com/mjudielmeguiel/LoginSystem.git)
 
 2. Open `LoginSystem.vbproj` in Visual Studio.
 3. Restore any required dependencies.
