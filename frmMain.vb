@@ -2,6 +2,32 @@
 
 Public Class frmMain
 
+    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Menupanel.Visible = False
+
+        ' Ipakita ang Role ng naka-login
+        lblUserRole.Text = $"{LoggedRole.ToUpper()}"
+
+        ' Itago ang mga button kung hindi Admin
+        Select Case LoggedRole.ToUpper()
+            Case "ADMINISTRATOR", "SYSTEM ADMIN"
+                Button3.Visible = True
+                Button7.Visible = True
+            Case Else
+                Button3.Visible = False
+                Button7.Visible = False
+        End Select
+
+        ' Ipakita ang Home form
+        Panel2.Controls.Clear()
+        Dim Home As New frmHome
+        Home.TopLevel = False
+        Home.FormBorderStyle = FormBorderStyle.None
+        Home.Dock = DockStyle.Fill
+        Panel2.Controls.Add(Home)
+        Home.Show()
+    End Sub
+
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         If MsgBox("Are you sure you want to logout?", MsgBoxStyle.YesNo + MsgBoxStyle.Question, "Logout") = MsgBoxResult.No Then
             Return
@@ -19,20 +45,9 @@ Public Class frmMain
         End Try
 
         LoggedFullname = ""
+        LoggedRole = ""
         Me.Hide()
         Application.Restart()
-    End Sub
-
-    Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Menupanel.Visible = False
-
-        Panel2.Controls.Clear()
-        Dim Home As New frmHome
-        Home.TopLevel = False
-        Home.FormBorderStyle = FormBorderStyle.None
-        Home.Dock = DockStyle.Fill
-        Panel2.Controls.Add(Home)
-        Home.Show()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -70,4 +85,5 @@ Public Class frmMain
         frmChangePassword.TopMost = True
         Me.TopMost = False
     End Sub
+
 End Class

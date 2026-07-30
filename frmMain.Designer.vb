@@ -24,11 +24,10 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.mainLabel = New System.Windows.Forms.Label()
+        Me.lblUserRole = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Menupanel = New System.Windows.Forms.Panel()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -41,7 +40,7 @@ Partial Class frmMain
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Panel1.Controls.Add(Me.mainLabel)
+        Me.Panel1.Controls.Add(Me.lblUserRole)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.btnClose)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
@@ -50,16 +49,16 @@ Partial Class frmMain
         Me.Panel1.Size = New System.Drawing.Size(1366, 48)
         Me.Panel1.TabIndex = 0
         '
-        'mainLabel
+        'lblUserRole
         '
-        Me.mainLabel.AutoSize = True
-        Me.mainLabel.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.mainLabel.ForeColor = System.Drawing.Color.Navy
-        Me.mainLabel.Location = New System.Drawing.Point(60, 9)
-        Me.mainLabel.Name = "mainLabel"
-        Me.mainLabel.Size = New System.Drawing.Size(216, 26)
-        Me.mainLabel.TabIndex = 162
-        Me.mainLabel.Text = "ADMIN DASHBOARD"
+        Me.lblUserRole.AutoSize = True
+        Me.lblUserRole.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUserRole.ForeColor = System.Drawing.Color.Navy
+        Me.lblUserRole.Location = New System.Drawing.Point(60, 9)
+        Me.lblUserRole.Name = "lblUserRole"
+        Me.lblUserRole.Size = New System.Drawing.Size(216, 26)
+        Me.lblUserRole.TabIndex = 162
+        Me.lblUserRole.Text = "ADMIN DASHBOARD"
         '
         'Button1
         '
@@ -100,7 +99,6 @@ Partial Class frmMain
         'Menupanel
         '
         Me.Menupanel.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Menupanel.Controls.Add(Me.Button4)
         Me.Menupanel.Controls.Add(Me.Button5)
         Me.Menupanel.Controls.Add(Me.Button7)
         Me.Menupanel.Controls.Add(Me.Button3)
@@ -110,24 +108,6 @@ Partial Class frmMain
         Me.Menupanel.Name = "Menupanel"
         Me.Menupanel.Size = New System.Drawing.Size(54, 720)
         Me.Menupanel.TabIndex = 2
-        '
-        'Button4
-        '
-        Me.Button4.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button4.FlatAppearance.BorderSize = 0
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(0, 156)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(54, 39)
-        Me.Button4.TabIndex = 147
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button4.UseVisualStyleBackColor = False
         '
         'Button5
         '
@@ -239,7 +219,6 @@ Partial Class frmMain
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Button7 As Button
     Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
-    Friend WithEvents mainLabel As Label
+    Friend WithEvents lblUserRole As Label
     Friend WithEvents Button5 As Button
 End Class

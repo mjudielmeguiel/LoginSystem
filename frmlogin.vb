@@ -45,46 +45,46 @@ Public Class frmlogin
     End Sub
 
     Private Sub checkifuserexist()
-        Call connection()
+        connection()
         lblError.Text = ""
+        lblAttempts.Text = "0"
 
         sql = "SELECT LoginAttempts, AccountStatus FROM users WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
-        cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         dr = cmd.ExecuteReader()
 
         If dr.Read() Then
-            lblAttempts.Text = dr("LoginAttempts").ToString()
+            lblAttempts.Text = If(IsDBNull(dr("LoginAttempts")), 0, dr("LoginAttempts")).ToString()
 
-            If dr("AccountStatus").ToString() = "Locked" Then
+            If dr("AccountStatus").ToString().Trim() = "Locked" Then
                 lblError.Text = "⚠ Your account is locked/deactivated."
                 dr.Close()
-                Call DBconnection.CloseConnection()
+                CloseConnection()
                 Exit Sub
             End If
 
             dr.Close()
-            Call DBconnection.CloseConnection()
-            Call Login()
+            CloseConnection()
+            Login()
         Else
             dr.Close()
-            Call DBconnection.CloseConnection()
+            CloseConnection()
 
-            ' Check sa Admin Table kung wala sa Users
-            Call connection()
+            connection()
             sql = "SELECT AdminID FROM admin WHERE Username=@user"
             cmd = New MySqlCommand(sql, cn)
-            cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+            cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
             dr = cmd.ExecuteReader()
 
             If dr.Read() Then
                 dr.Close()
-                Call DBconnection.CloseConnection()
-                Call LoginAdmin()
+                CloseConnection()
+                LoginAdmin()
             Else
                 lblError.Text = "User does not exist."
                 dr.Close()
-                Call DBconnection.CloseConnection()
+                CloseConnection()
             End If
         End If
     End Sub
@@ -95,27 +95,32 @@ Public Class frmlogin
 
     Private Sub btnlogin_Click(sender As Object, e As EventArgs) Handles btnlogin.Click
         lblError.Text = ""
-        If txtUsername.Text = "" Or txtUsername.Text = "Please Enter your username" Or
-           txtPassword.Text = "" Or txtPassword.Text = "Please Enter your Password" Then
+        Dim userInput As String = txtUsername.Text.Trim()
+        Dim passInput As String = txtPassword.Text.Trim()
+
+        If userInput = "" OrElse userInput = "Please Enter your username" OrElse
+           passInput = "" OrElse passInput = "Please Enter your Password" Then
             lblError.Text = "Enter username and password."
-        Else
-            checkifuserexist()
+            Return
         End If
+
+        checkifuserexist()
     End Sub
 
     Private Sub Login()
-        Call connection()
+        connection()
         lblError.Text = ""
 
         sql = "SELECT * FROM users WHERE Username=@user AND Password=@pass"
         cmd = New MySqlCommand(sql, cn)
-        cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
         dr = cmd.ExecuteReader()
 
         If dr.Read() Then
             LoggedFullname = dr("FullName").ToString()
-            Dim currentUser As String = txtUsername.Text
+            LoggedRole = dr("Role").ToString().Trim()
+            Dim currentUser As String = txtUsername.Text.Trim()
             dr.Close()
 
             sql = "UPDATE users SET LoginAttempts=0, AccountStatus='Active' WHERE Username=@user"
@@ -123,48 +128,54 @@ Public Class frmlogin
             cmd.Parameters.AddWithValue("@user", currentUser)
             cmd.ExecuteNonQuery()
 
-            Call DBconnection.CloseConnection()
+            CloseConnection()
 
             lblError.Text = "✓ Login Success! Redirecting..."
             Timer1.Interval = 800
             Timer1.Start()
         Else
             dr.Close()
-            lblAttempts.Text = CInt(lblAttempts.Text) + 1
-            Call UpdateAttempts()
+            Dim currentAttempts As Integer
+            If Not Integer.TryParse(lblAttempts.Text, currentAttempts) Then currentAttempts = 0
+            currentAttempts += 1
+            lblAttempts.Text = currentAttempts.ToString()
 
-            If CInt(lblAttempts.Text) >= 3 Then
-                lblError.Text = "3 failed attempts reached. Account locked."
-                Call DeactAccts()
+            UpdateAttempts()
+
+            If currentAttempts >= 3 Then
+                lblError.Text = "⚠ 3 failed attempts reached. Account locked."
+                DeactAccts()
             Else
-                lblError.Text = $"Incorrect Password. Attempt {lblAttempts.Text} of 3."
+                lblError.Text = $"✗ Incorrect Password. Attempt {currentAttempts} of 3."
             End If
-            Call DBconnection.CloseConnection()
+
+            CloseConnection()
         End If
     End Sub
 
     Private Sub LoginAdmin()
-        Call connection()
+        connection()
         lblError.Text = ""
 
         sql = "SELECT * FROM admin WHERE Username=@user AND Password=@pass"
         cmd = New MySqlCommand(sql, cn)
-        cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
         dr = cmd.ExecuteReader()
 
         If dr.Read() Then
             LoggedFullname = dr("FullName").ToString()
+            LoggedRole = "Administrator"
             dr.Close()
-            Call DBconnection.CloseConnection()
+            CloseConnection()
 
             lblError.Text = "✓ Admin Login Success! Redirecting..."
             Timer1.Interval = 800
             Timer1.Start()
         Else
             dr.Close()
-            lblError.Text = "Incorrect Admin Password."
-            Call DBconnection.CloseConnection()
+            lblError.Text = "✗ Incorrect Admin Password."
+            CloseConnection()
         End If
     End Sub
 
@@ -175,32 +186,26 @@ Public Class frmlogin
     End Sub
 
     Private Sub UpdateAttempts()
-        Call connection()
+        connection()
         sql = "UPDATE users SET LoginAttempts=@attempts WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
-        With cmd
-            .Parameters.AddWithValue("@attempts", lblAttempts.Text)
-            .Parameters.AddWithValue("@user", txtUsername.Text)
-            .ExecuteNonQuery()
-        End With
-        Call DBconnection.CloseConnection()
+        cmd.Parameters.AddWithValue("@attempts", lblAttempts.Text)
+        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
+        cmd.ExecuteNonQuery()
+        CloseConnection()
     End Sub
 
     Private Sub DeactAccts()
-        Call connection()
+        connection()
         sql = "UPDATE users SET AccountStatus='Locked' WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
-        cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.ExecuteNonQuery()
-        Call DBconnection.CloseConnection()
+        CloseConnection()
     End Sub
 
     Private Sub btnShowPass_Click(sender As Object, e As EventArgs) Handles btnShowPass.Click
-        If txtPassword.PasswordChar = "●"c Then
-            txtPassword.PasswordChar = Char.MinValue
-        Else
-            txtPassword.PasswordChar = "●"c
-        End If
+        txtPassword.PasswordChar = If(txtPassword.PasswordChar = "●"c, Char.MinValue, "●"c)
     End Sub
 
     Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
