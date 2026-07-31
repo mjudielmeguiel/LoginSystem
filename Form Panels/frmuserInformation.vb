@@ -12,6 +12,7 @@ Public Class frmuserInformation
         Try
             connection()
 
+            ' Kunin muna ang DepartmentID ng kasalukuyang naka-login na Admin
             sql = "SELECT AdminID FROM admin WHERE FullName=@adminname"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@adminname", LoggedFullname)
@@ -22,6 +23,7 @@ Public Class frmuserInformation
             End If
             dr.Close()
 
+            ' === NAKA-FILTER NA: MAKIKITA LANG ANG USER NA MAY PAREHONG DepartmentID ===
             sql = "SELECT UserID, Username, Firstname, Lastname, Role, AccountStatus, LoginAttempts, FullName " &
                   "FROM users WHERE DepartmentID=@deptid"
 
@@ -66,7 +68,7 @@ Public Class frmuserInformation
         Try
             connection()
 
-            sql = "UPDATE users SET AccountStatus = 'Active', LoginAttempts = 0 WHERE UserID = @uid"
+            sql = "UPDATE users SET AccountStatus = 'Offline', LoginAttempts = 0 WHERE UserID = @uid"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@uid", selectedUserID)
             cmd.ExecuteNonQuery()
@@ -91,6 +93,7 @@ Public Class frmuserInformation
         Dim selectedUserID As Integer = Convert.ToInt32(DataGridView1.SelectedRows(0).Cells("UserID").Value)
         Dim selectedUser As String = DataGridView1.SelectedRows(0).Cells("Username").Value.ToString()
 
+        ' Hindi pwedeng burahin ang sarili
         If selectedFullName = LoggedFullname Then
             MsgBox("You cannot delete your own account!", MsgBoxStyle.Exclamation)
             Return
@@ -119,6 +122,7 @@ Public Class frmuserInformation
     End Sub
 
     Private Sub btnnewadmin_Click(sender As Object, e As EventArgs)
-
+        ' Iwanan mo muna o lagyan ng gagawin mo dito
     End Sub
+
 End Class

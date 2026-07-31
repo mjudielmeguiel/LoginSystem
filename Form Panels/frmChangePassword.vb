@@ -27,10 +27,9 @@ Public Class frmChangePassword
         Call connection()
 
         Try
-
             sql = "SELECT Password FROM users WHERE FullName=@name AND Password=@current"
             cmd = New MySqlCommand(sql, cn)
-            cmd.Parameters.AddWithValue("@name", DBconnection.LoggedFullname)
+            cmd.Parameters.AddWithValue("@name", LoggedFullname)
             cmd.Parameters.AddWithValue("@current", txtCurrentPass.Text)
             dr = cmd.ExecuteReader()
 
@@ -47,7 +46,7 @@ Public Class frmChangePassword
             cmd = New MySqlCommand(sql, cn)
             With cmd
                 .Parameters.AddWithValue("@newpass", txtNewPass.Text.Trim())
-                .Parameters.AddWithValue("@name", DBconnection.LoggedFullname)
+                .Parameters.AddWithValue("@name", LoggedFullname)
                 .ExecuteNonQuery()
             End With
 
@@ -69,7 +68,6 @@ Public Class frmChangePassword
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.Hide()
         Dim main As New frmMain
-
         Me.TopMost = False
         main.Enabled = True
         main.TopMost = True
@@ -109,4 +107,5 @@ Public Class frmChangePassword
         frmMain.Enabled = False
         lblPassStatus.Text = ""
     End Sub
+
 End Class

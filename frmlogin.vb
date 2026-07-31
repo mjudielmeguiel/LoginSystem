@@ -49,6 +49,11 @@ Public Class frmlogin
         lblError.Text = ""
         lblAttempts.Text = "0"
 
+        If cn.State <> ConnectionState.Open Then
+            lblError.Text = "Cannot connect to database!"
+            Exit Sub
+        End If
+
         sql = "SELECT LoginAttempts, AccountStatus FROM users WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
@@ -72,6 +77,11 @@ Public Class frmlogin
             CloseConnection()
 
             connection()
+            If cn.State <> ConnectionState.Open Then
+                lblError.Text = "Cannot connect to database!"
+                Exit Sub
+            End If
+
             sql = "SELECT AdminID FROM admin WHERE Username=@user"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
@@ -110,6 +120,11 @@ Public Class frmlogin
     Private Sub Login()
         connection()
         lblError.Text = ""
+
+        If cn.State <> ConnectionState.Open Then
+            lblError.Text = "Cannot connect to database!"
+            Exit Sub
+        End If
 
         sql = "SELECT * FROM users WHERE Username=@user AND Password=@pass"
         cmd = New MySqlCommand(sql, cn)
@@ -157,6 +172,11 @@ Public Class frmlogin
         connection()
         lblError.Text = ""
 
+        If cn.State <> ConnectionState.Open Then
+            lblError.Text = "Cannot connect to database!"
+            Exit Sub
+        End If
+
         sql = "SELECT * FROM admin WHERE Username=@user AND Password=@pass"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
@@ -187,6 +207,7 @@ Public Class frmlogin
 
     Private Sub UpdateAttempts()
         connection()
+        If cn.State <> ConnectionState.Open Then Exit Sub
         sql = "UPDATE users SET LoginAttempts=@attempts WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@attempts", lblAttempts.Text)
@@ -197,6 +218,7 @@ Public Class frmlogin
 
     Private Sub DeactAccts()
         connection()
+        If cn.State <> ConnectionState.Open Then Exit Sub
         sql = "UPDATE users SET AccountStatus='Locked' WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())

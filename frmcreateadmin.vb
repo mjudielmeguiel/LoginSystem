@@ -9,26 +9,16 @@ Public Class frmcreateadmin
         End If
 
         If txtPassword.Text <> txtConfirmPass.Text Then
+            MsgBox("Password does not match!", MsgBoxStyle.Exclamation)
             Exit Sub
         End If
 
         Call connection()
 
         Try
-            sql = "SELECT AdminID FROM admin"
-            cmd = New MySqlCommand(sql, cn)
-            dr = cmd.ExecuteReader()
-
-            If dr.HasRows Then
-                MsgBox("Admin account already exists! Only one Admin is allowed.", MsgBoxStyle.Exclamation)
-                dr.Close()
-                Call DBconnection.CloseConnection()
-                ClearAllFields()
-                Exit Sub
-            End If
-            dr.Close()
 
             Dim fullname As String = Trim(txtLastname.Text) & ", " & Trim(txtFirstname.Text)
+
             sql = "SELECT FullName FROM admin WHERE FullName=@full"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@full", fullname)
@@ -126,4 +116,5 @@ Public Class frmcreateadmin
     Private Sub frmcreateadmin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lblPassStatus.Text = ""
     End Sub
+
 End Class

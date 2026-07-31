@@ -82,5 +82,4 @@ Public Class frmMain
         frmChangePassword.TopMost = True
         Me.TopMost = False
     End Sub
-
 End Class
