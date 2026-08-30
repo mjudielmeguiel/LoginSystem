@@ -1,4 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Data.SqlClient
+Imports MySql.Data.MySqlClient
 
 Module DBconnection
     Public cn As New MySqlConnection
@@ -14,7 +15,8 @@ Module DBconnection
                 cn.Close()
             End If
 
-            cn.ConnectionString = "server=localhost;user=root;password=;database=logindb;"
+            ' Updated database name to applicantdb
+            cn.ConnectionString = "server=localhost;user=root;password=;database=applicantdb;"
             cn.Open()
         Catch ex As Exception
             MsgBox("Connection Failed: " & ex.Message, MsgBoxStyle.Critical)

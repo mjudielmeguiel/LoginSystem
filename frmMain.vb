@@ -1,4 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Drawing.Drawing2D
+Imports MySql.Data.MySqlClient
 
 Public Class frmMain
 
@@ -16,6 +17,9 @@ Public Class frmMain
                 Button7.Visible = False
         End Select
 
+        ' Apply circular clip to the profile PictureBox
+        MakeCircularPictureBox(picProfile)
+
         Panel2.Controls.Clear()
         Dim Home As New frmHome
         Home.TopLevel = False
@@ -25,6 +29,22 @@ Public Class frmMain
         Home.Show()
     End Sub
 
+    ' --- CIRCULAR PICTURE BOX SETUP ---
+    Private Sub MakeCircularPictureBox(pic As PictureBox)
+        pic.SizeMode = PictureBoxSizeMode.StretchImage
+        Dim path As New GraphicsPath()
+        path.AddEllipse(0, 0, pic.Width, pic.Height)
+        pic.Region = New Region(path)
+    End Sub
+
+    ' Modern circular border outline around profile picture
+    Private Sub picProfile_Paint(sender As Object, e As PaintEventArgs) Handles picProfile.Paint
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+        Using pen As New Pen(Color.FromArgb(0, 103, 184), 2) ' Modern Edge Blue Accent Border
+            e.Graphics.DrawEllipse(pen, 1, 1, picProfile.Width - 3, picProfile.Height - 3)
+        End Using
+    End Sub
+
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         If MsgBox("Are you sure you want to logout?", MsgBoxStyle.YesNo + MsgBoxStyle.Question, "Logout") = MsgBoxResult.No Then
             Return
@@ -32,7 +52,7 @@ Public Class frmMain
 
         Try
             connection()
-            sql = "UPDATE users SET AccountStatus='Offline' WHERE FullName=@fname"
+            sql = "UPDATE users SET Status='Offline' WHERE FullName=@fname"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@fname", LoggedFullname)
             cmd.ExecuteNonQuery()

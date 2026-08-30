@@ -24,22 +24,30 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.picProfile = New System.Windows.Forms.PictureBox()
         Me.lblUserRole = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Menupanel = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button6 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picProfile, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Menupanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Panel1.Controls.Add(Me.PictureBox2)
+        Me.Panel1.Controls.Add(Me.picProfile)
         Me.Panel1.Controls.Add(Me.lblUserRole)
         Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.btnClose)
@@ -49,16 +57,38 @@ Partial Class frmMain
         Me.Panel1.Size = New System.Drawing.Size(1366, 48)
         Me.Panel1.TabIndex = 0
         '
+        'PictureBox2
+        '
+        Me.PictureBox2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
+        Me.PictureBox2.Location = New System.Drawing.Point(54, 0)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(64, 48)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox2.TabIndex = 164
+        Me.PictureBox2.TabStop = False
+        '
+        'picProfile
+        '
+        Me.picProfile.Dock = System.Windows.Forms.DockStyle.Right
+        Me.picProfile.Image = CType(resources.GetObject("picProfile.Image"), System.Drawing.Image)
+        Me.picProfile.Location = New System.Drawing.Point(1258, 0)
+        Me.picProfile.Name = "picProfile"
+        Me.picProfile.Size = New System.Drawing.Size(54, 48)
+        Me.picProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picProfile.TabIndex = 163
+        Me.picProfile.TabStop = False
+        '
         'lblUserRole
         '
         Me.lblUserRole.AutoSize = True
         Me.lblUserRole.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUserRole.ForeColor = System.Drawing.Color.Navy
-        Me.lblUserRole.Location = New System.Drawing.Point(60, 9)
+        Me.lblUserRole.Location = New System.Drawing.Point(124, 9)
         Me.lblUserRole.Name = "lblUserRole"
-        Me.lblUserRole.Size = New System.Drawing.Size(216, 26)
+        Me.lblUserRole.Size = New System.Drawing.Size(54, 26)
         Me.lblUserRole.TabIndex = 162
-        Me.lblUserRole.Text = "ADMIN DASHBOARD"
+        Me.lblUserRole.Text = "Role"
         '
         'Button1
         '
@@ -102,12 +132,32 @@ Partial Class frmMain
         Me.Menupanel.Controls.Add(Me.Button5)
         Me.Menupanel.Controls.Add(Me.Button7)
         Me.Menupanel.Controls.Add(Me.Button3)
+        Me.Menupanel.Controls.Add(Me.Button6)
+        Me.Menupanel.Controls.Add(Me.Button4)
         Me.Menupanel.Controls.Add(Me.Button2)
         Me.Menupanel.Dock = System.Windows.Forms.DockStyle.Left
         Me.Menupanel.Location = New System.Drawing.Point(0, 48)
         Me.Menupanel.Name = "Menupanel"
         Me.Menupanel.Size = New System.Drawing.Size(54, 720)
         Me.Menupanel.TabIndex = 2
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.Button4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Button4.FlatAppearance.BorderSize = 0
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.ForeColor = System.Drawing.Color.DarkBlue
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Location = New System.Drawing.Point(0, 681)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(54, 39)
+        Me.Button4.TabIndex = 149
+        Me.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.Button4.UseVisualStyleBackColor = False
         '
         'Button5
         '
@@ -119,7 +169,7 @@ Partial Class frmMain
         Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button5.ForeColor = System.Drawing.Color.DarkBlue
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
-        Me.Button5.Location = New System.Drawing.Point(0, 117)
+        Me.Button5.Location = New System.Drawing.Point(0, 156)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(54, 39)
         Me.Button5.TabIndex = 148
@@ -137,7 +187,7 @@ Partial Class frmMain
         Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button7.ForeColor = System.Drawing.Color.DarkBlue
         Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
-        Me.Button7.Location = New System.Drawing.Point(0, 78)
+        Me.Button7.Location = New System.Drawing.Point(0, 117)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(54, 39)
         Me.Button7.TabIndex = 145
@@ -155,7 +205,7 @@ Partial Class frmMain
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.DarkBlue
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(0, 39)
+        Me.Button3.Location = New System.Drawing.Point(0, 78)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(54, 39)
         Me.Button3.TabIndex = 146
@@ -190,6 +240,24 @@ Partial Class frmMain
         Me.Panel2.Size = New System.Drawing.Size(1312, 720)
         Me.Panel2.TabIndex = 3
         '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Button6.FlatAppearance.BorderSize = 0
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.DarkBlue
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.Location = New System.Drawing.Point(0, 39)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(54, 39)
+        Me.Button6.TabIndex = 150
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.Button6.UseVisualStyleBackColor = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -206,6 +274,8 @@ Partial Class frmMain
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picProfile, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Menupanel.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -221,4 +291,8 @@ Partial Class frmMain
     Friend WithEvents Button3 As Button
     Friend WithEvents lblUserRole As Label
     Friend WithEvents Button5 As Button
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents picProfile As PictureBox
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button6 As Button
 End Class

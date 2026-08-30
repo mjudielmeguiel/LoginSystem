@@ -3,8 +3,11 @@
 Public Class frmcreateadmin
 
     Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        If txtDepartment.Text = "" Or txtLastname.Text = "" Or txtFirstname.Text = "" Or txtUsername.Text = "" Or txtPassword.Text = "" Or txtConfirmPass.Text = "" Then
-            MsgBox("Please fill all fields including Department!", MsgBoxStyle.Exclamation)
+        ' Validate required fields
+        If txtDepartment.Text.Trim() = "" OrElse txtLastname.Text.Trim() = "" OrElse txtFirstname.Text.Trim() = "" OrElse
+       txtUsername.Text.Trim() = "" OrElse txtEmail.Text.Trim() = "" OrElse
+       txtPassword.Text = "" OrElse txtConfirmPass.Text = "" Then
+            MsgBox("Please fill all required fields!", MsgBoxStyle.Exclamation)
             Exit Sub
         End If
 
@@ -13,15 +16,15 @@ Public Class frmcreateadmin
             Exit Sub
         End If
 
+        Dim fullName As String = $"{txtLastname.Text.Trim()}, {txtFirstname.Text.Trim()}"
+
         Call connection()
 
         Try
-
-            Dim fullname As String = Trim(txtLastname.Text) & ", " & Trim(txtFirstname.Text)
-
-            sql = "SELECT FullName FROM admin WHERE FullName=@full"
+            ' 1. Updated: Query 'admins' table (plural)
+            sql = "SELECT FullName FROM admins WHERE FullName=@full"
             cmd = New MySqlCommand(sql, cn)
-            cmd.Parameters.AddWithValue("@full", fullname)
+            cmd.Parameters.AddWithValue("@full", fullName)
             dr = cmd.ExecuteReader()
 
             If dr.HasRows Then
@@ -33,9 +36,10 @@ Public Class frmcreateadmin
             End If
             dr.Close()
 
-            sql = "SELECT Username FROM admin WHERE Username=@user"
+            ' 2. Updated: Query 'admins' table (plural)
+            sql = "SELECT Username FROM admins WHERE Username=@user"
             cmd = New MySqlCommand(sql, cn)
-            cmd.Parameters.AddWithValue("@user", txtUsername.Text)
+            cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
             dr = cmd.ExecuteReader()
 
             If dr.HasRows Then
@@ -47,16 +51,30 @@ Public Class frmcreateadmin
             End If
             dr.Close()
 
-            sql = "INSERT INTO admin (Department, Lastname, Firstname, FullName, Username, Password) 
-                   VALUES (@dept, @last, @first, @full, @user, @pass)"
+            ' 3. Updated: Query 'admins' table (plural)
+            sql = "SELECT Email FROM admins WHERE Email=@email"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@email", txtEmail.Text.Trim())
+            dr = cmd.ExecuteReader()
+
+            If dr.HasRows Then
+                MsgBox("Email already exists!", MsgBoxStyle.Exclamation)
+                dr.Close()
+                Call DBconnection.CloseConnection()
+                ClearAllFields()
+                Exit Sub
+            End If
+            dr.Close()
+
+            ' 4. Updated: INSERT INTO 'admins' table (plural)
+            sql = "INSERT INTO admins (FullName, Email, Username, PasswordHash, RoleID, Status) " &
+              "VALUES (@full, @email, @user, @pass, 2, 'Active')"
 
             cmd = New MySqlCommand(sql, cn)
             With cmd
-                .Parameters.AddWithValue("@dept", txtDepartment.Text)
-                .Parameters.AddWithValue("@last", txtLastname.Text)
-                .Parameters.AddWithValue("@first", txtFirstname.Text)
-                .Parameters.AddWithValue("@full", fullname)
-                .Parameters.AddWithValue("@user", txtUsername.Text)
+                .Parameters.AddWithValue("@full", fullName)
+                .Parameters.AddWithValue("@email", txtEmail.Text.Trim())
+                .Parameters.AddWithValue("@user", txtUsername.Text.Trim())
                 .Parameters.AddWithValue("@pass", txtPassword.Text)
                 .ExecuteNonQuery()
             End With
@@ -87,6 +105,7 @@ Public Class frmcreateadmin
         txtLastname.Clear()
         txtFirstname.Clear()
         txtUsername.Clear()
+        txtEmail.Clear()
         txtPassword.Clear()
         txtConfirmPass.Clear()
         lblPassStatus.Text = ""
@@ -100,7 +119,7 @@ Public Class frmcreateadmin
             Return
         End If
 
-        If txtPassword.Text.Trim() = txtConfirmPass.Text.Trim() Then
+        If txtPassword.Text = txtConfirmPass.Text Then
             lblPassStatus.Text = "✓ Password Match"
             lblPassStatus.ForeColor = Color.Green
         Else

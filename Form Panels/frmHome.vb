@@ -36,18 +36,6 @@ Public Class frmHome
             lblWelcome.Text = "Welcome - " & LoggedFullname
             lblDept.Text = deptName
 
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept", cn)
-            cmd.Parameters.AddWithValue("@dept", deptID)
-            lblTotalUsers.Text = cmd.ExecuteScalar().ToString()
-
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept AND AccountStatus='Active'", cn)
-            cmd.Parameters.AddWithValue("@dept", deptID)
-            lblActiveUsers.Text = cmd.ExecuteScalar().ToString()
-
-            cmd = New MySqlCommand("SELECT COUNT(UserID) FROM users WHERE DepartmentID=@dept AND AccountStatus='Locked'", cn)
-            cmd.Parameters.AddWithValue("@dept", deptID)
-            lblLockedAccounts.Text = cmd.ExecuteScalar().ToString()
-
         Catch ex As Exception
             MsgBox("Error loading data: " & ex.Message, MsgBoxStyle.Critical)
         Finally
