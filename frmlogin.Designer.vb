@@ -73,7 +73,7 @@ Partial Class frmlogin
         Me.btnlogin.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnlogin.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.btnlogin.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnlogin.Location = New System.Drawing.Point(717, 530)
+        Me.btnlogin.Location = New System.Drawing.Point(717, 532)
         Me.btnlogin.Name = "btnlogin"
         Me.btnlogin.Size = New System.Drawing.Size(134, 37)
         Me.btnlogin.TabIndex = 134
