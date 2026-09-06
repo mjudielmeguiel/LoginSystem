@@ -10,10 +10,10 @@ Public Class frmMain
 
         Select Case LoggedRole.ToUpper()
             Case "ADMINISTRATOR", "SYSTEM ADMIN"
-                Button3.Visible = True
+                'Button3.Visible = True
                 Button7.Visible = True
             Case Else
-                Button3.Visible = False
+                'Button3.Visible = False
                 Button7.Visible = False
         End Select
 
@@ -83,15 +83,15 @@ Public Class frmMain
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Panel2.Controls.Clear()
-        Dim User As New frmuserInformation
-        User.TopLevel = False
-        User.FormBorderStyle = FormBorderStyle.None
-        User.Dock = DockStyle.Fill
-        Panel2.Controls.Add(User)
-        User.Show()
+        Dim ApplicantList As New frmApplicantList
+        ApplicantList.TopLevel = False
+        ApplicantList.FormBorderStyle = FormBorderStyle.None
+        ApplicantList.Dock = DockStyle.Fill
+        Panel2.Controls.Add(ApplicantList)
+        ApplicantList.Show()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs)
         frmcreateuser.Show()
         frmcreateuser.TopMost = True
         Me.TopMost = False
@@ -101,5 +101,13 @@ Public Class frmMain
         frmChangePassword.Show()
         frmChangePassword.TopMost = True
         Me.TopMost = False
+    End Sub
+
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        frmAddApplicant.Show()
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        frmcreateuser.Show()
     End Sub
 End Class

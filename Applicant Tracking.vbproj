@@ -163,6 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBconnection.vb" />
+    <Compile Include="Form Panels\frmApplicantList.Designer.vb">
+      <DependentUpon>frmApplicantList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form Panels\frmApplicantList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form Panels\frmChangePassword.Designer.vb">
       <DependentUpon>frmChangePassword.vb</DependentUpon>
     </Compile>
@@ -221,8 +227,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="USER\frmAddApplicant.Designer.vb">
+      <DependentUpon>frmAddApplicant.vb</DependentUpon>
+    </Compile>
+    <Compile Include="USER\frmAddApplicant.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form Panels\frmApplicantList.resx">
+      <DependentUpon>frmApplicantList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form Panels\frmChangePassword.resx">
       <DependentUpon>frmChangePassword.vb</DependentUpon>
     </EmbeddedResource>
@@ -250,9 +265,11 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="USER\frmAddApplicant.resx">
+      <DependentUpon>frmAddApplicant.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LoginSystem_TemporaryKey.pfx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -277,5 +294,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
