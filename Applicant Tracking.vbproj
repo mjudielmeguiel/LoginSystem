@@ -100,6 +100,10 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Office.Interop.Excel.16.0.18925.20022\lib\net40\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MySql.Data, Version=9.7.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>packages\MySql.Data.9.7.0\lib\net48\MySql.Data.dll</HintPath>
     </Reference>
@@ -169,34 +173,16 @@
     <Compile Include="Form Panels\frmApplicantList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form Panels\frmChangePassword.Designer.vb">
-      <DependentUpon>frmChangePassword.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form Panels\frmChangePassword.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form Panels\frmHome.Designer.vb">
       <DependentUpon>frmHome.vb</DependentUpon>
     </Compile>
     <Compile Include="Form Panels\frmHome.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form Panels\frmuserInformation.Designer.vb">
-      <DependentUpon>frmuserInformation.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form Panels\frmuserInformation.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmcreateadmin.Designer.vb">
       <DependentUpon>frmcreateadmin.vb</DependentUpon>
     </Compile>
     <Compile Include="frmcreateadmin.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form Panels\frmcreateuser.Designer.vb">
-      <DependentUpon>frmcreateuser.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form Panels\frmcreateuser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmlogin.Designer.vb">
@@ -233,25 +219,22 @@
     <Compile Include="USER\frmAddApplicant.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="USER\frmSettings.Designer.vb">
+      <DependentUpon>frmSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="USER\frmSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form Panels\frmApplicantList.resx">
       <DependentUpon>frmApplicantList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form Panels\frmChangePassword.resx">
-      <DependentUpon>frmChangePassword.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form Panels\frmHome.resx">
       <DependentUpon>frmHome.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form Panels\frmuserInformation.resx">
-      <DependentUpon>frmuserInformation.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmcreateadmin.resx">
       <DependentUpon>frmcreateadmin.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form Panels\frmcreateuser.resx">
-      <DependentUpon>frmcreateuser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmlogin.resx">
       <DependentUpon>frmlogin.vb</DependentUpon>
@@ -267,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="USER\frmAddApplicant.resx">
       <DependentUpon>frmAddApplicant.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="USER\frmSettings.resx">
+      <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

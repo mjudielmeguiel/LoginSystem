@@ -24,259 +24,145 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.picProfile = New System.Windows.Forms.PictureBox()
-        Me.lblUserRole = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.btnClose = New System.Windows.Forms.Button()
-        Me.Menupanel = New System.Windows.Forms.Panel()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button8 = New System.Windows.Forms.Button()
-        Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picProfile, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Menupanel.SuspendLayout()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.MenuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProfileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SwitchAccountToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ApplicantMasterlistToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MRFMonitoringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AboutUsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.MenuStrip1.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
-        Me.Panel1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Panel1.Controls.Add(Me.PictureBox2)
-        Me.Panel1.Controls.Add(Me.picProfile)
-        Me.Panel1.Controls.Add(Me.lblUserRole)
-        Me.Panel1.Controls.Add(Me.Button1)
-        Me.Panel1.Controls.Add(Me.btnClose)
+        Me.Panel1.BackColor = System.Drawing.Color.Navy
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1366, 48)
+        Me.Panel1.Size = New System.Drawing.Size(1366, 47)
         Me.Panel1.TabIndex = 0
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Dock = System.Windows.Forms.DockStyle.Left
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(54, 0)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(64, 48)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox2.TabIndex = 164
-        Me.PictureBox2.TabStop = False
-        '
-        'picProfile
-        '
-        Me.picProfile.Dock = System.Windows.Forms.DockStyle.Right
-        Me.picProfile.Image = CType(resources.GetObject("picProfile.Image"), System.Drawing.Image)
-        Me.picProfile.Location = New System.Drawing.Point(1258, 0)
-        Me.picProfile.Name = "picProfile"
-        Me.picProfile.Size = New System.Drawing.Size(54, 48)
-        Me.picProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picProfile.TabIndex = 163
-        Me.picProfile.TabStop = False
-        '
-        'lblUserRole
-        '
-        Me.lblUserRole.AutoSize = True
-        Me.lblUserRole.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUserRole.ForeColor = System.Drawing.Color.Navy
-        Me.lblUserRole.Location = New System.Drawing.Point(124, 9)
-        Me.lblUserRole.Name = "lblUserRole"
-        Me.lblUserRole.Size = New System.Drawing.Size(54, 26)
-        Me.lblUserRole.TabIndex = 162
-        Me.lblUserRole.Text = "Role"
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(0, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(54, 48)
-        Me.Button1.TabIndex = 142
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.Button1.UseVisualStyleBackColor = False
-        '
-        'btnClose
-        '
-        Me.btnClose.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.btnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.btnClose.Dock = System.Windows.Forms.DockStyle.Right
-        Me.btnClose.FlatAppearance.BorderSize = 0
-        Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClose.ForeColor = System.Drawing.Color.DarkBlue
-        Me.btnClose.Image = CType(resources.GetObject("btnClose.Image"), System.Drawing.Image)
-        Me.btnClose.Location = New System.Drawing.Point(1312, 0)
-        Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(54, 48)
-        Me.btnClose.TabIndex = 141
-        Me.btnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.btnClose.UseVisualStyleBackColor = False
-        '
-        'Menupanel
-        '
-        Me.Menupanel.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Menupanel.Controls.Add(Me.Button8)
-        Me.Menupanel.Controls.Add(Me.Button3)
-        Me.Menupanel.Controls.Add(Me.Button6)
-        Me.Menupanel.Controls.Add(Me.Button5)
-        Me.Menupanel.Controls.Add(Me.Button7)
-        Me.Menupanel.Controls.Add(Me.Button4)
-        Me.Menupanel.Controls.Add(Me.Button2)
-        Me.Menupanel.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Menupanel.Location = New System.Drawing.Point(0, 48)
-        Me.Menupanel.Name = "Menupanel"
-        Me.Menupanel.Size = New System.Drawing.Size(54, 720)
-        Me.Menupanel.TabIndex = 2
-        '
-        'Button6
-        '
-        Me.Button6.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button6.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button6.FlatAppearance.BorderSize = 0
-        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
-        Me.Button6.Location = New System.Drawing.Point(0, 117)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(54, 39)
-        Me.Button6.TabIndex = 150
-        Me.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button6.UseVisualStyleBackColor = False
-        '
-        'Button5
-        '
-        Me.Button5.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button5.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button5.FlatAppearance.BorderSize = 0
-        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
-        Me.Button5.Location = New System.Drawing.Point(0, 78)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(54, 39)
-        Me.Button5.TabIndex = 148
-        Me.Button5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button5.UseVisualStyleBackColor = False
-        '
-        'Button7
-        '
-        Me.Button7.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button7.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button7.FlatAppearance.BorderSize = 0
-        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button7.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
-        Me.Button7.Location = New System.Drawing.Point(0, 39)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(54, 39)
-        Me.Button7.TabIndex = 145
-        Me.Button7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button7.UseVisualStyleBackColor = False
-        '
-        'Button4
-        '
-        Me.Button4.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Button4.FlatAppearance.BorderSize = 0
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(0, 681)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(54, 39)
-        Me.Button4.TabIndex = 149
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button4.UseVisualStyleBackColor = False
-        '
-        'Button2
-        '
-        Me.Button2.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button2.FlatAppearance.BorderSize = 0
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(0, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(54, 39)
-        Me.Button2.TabIndex = 143
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button2.UseVisualStyleBackColor = False
         '
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(54, 48)
+        Me.Panel2.Location = New System.Drawing.Point(0, 83)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1312, 720)
+        Me.Panel2.Size = New System.Drawing.Size(1366, 659)
         Me.Panel2.TabIndex = 3
         '
-        'Button3
+        'MenuStrip1
         '
-        Me.Button3.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button3.FlatAppearance.BorderSize = 0
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(0, 156)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(54, 39)
-        Me.Button3.TabIndex = 151
-        Me.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button3.UseVisualStyleBackColor = False
+        Me.MenuStrip1.Font = New System.Drawing.Font("Microsoft YaHei UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MenuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MenuToolStripMenuItem, Me.ApplicantMasterlistToolStripMenuItem, Me.MRFMonitoringToolStripMenuItem, Me.AboutUsToolStripMenuItem})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 47)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(1366, 36)
+        Me.MenuStrip1.TabIndex = 4
+        Me.MenuStrip1.Text = "MenuStrip1"
         '
-        'Button8
+        'MenuToolStripMenuItem
         '
-        Me.Button8.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.Button8.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Button8.FlatAppearance.BorderSize = 0
-        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button8.ForeColor = System.Drawing.Color.DarkBlue
-        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
-        Me.Button8.Location = New System.Drawing.Point(0, 195)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(54, 39)
-        Me.Button8.TabIndex = 152
-        Me.Button8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.Button8.UseVisualStyleBackColor = False
+        Me.MenuToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ProfileToolStripMenuItem, Me.SettingsToolStripMenuItem, Me.SwitchAccountToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.MenuToolStripMenuItem.Font = New System.Drawing.Font("Microsoft YaHei UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MenuToolStripMenuItem.Image = CType(resources.GetObject("MenuToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.MenuToolStripMenuItem.Name = "MenuToolStripMenuItem"
+        Me.MenuToolStripMenuItem.Size = New System.Drawing.Size(99, 32)
+        Me.MenuToolStripMenuItem.Text = "Menu"
+        '
+        'ProfileToolStripMenuItem
+        '
+        Me.ProfileToolStripMenuItem.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ProfileToolStripMenuItem.Image = CType(resources.GetObject("ProfileToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ProfileToolStripMenuItem.Name = "ProfileToolStripMenuItem"
+        Me.ProfileToolStripMenuItem.Size = New System.Drawing.Size(226, 30)
+        Me.ProfileToolStripMenuItem.Text = "Profile"
+        '
+        'SettingsToolStripMenuItem
+        '
+        Me.SettingsToolStripMenuItem.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SettingsToolStripMenuItem.Image = CType(resources.GetObject("SettingsToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
+        Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(226, 30)
+        Me.SettingsToolStripMenuItem.Text = "Settings"
+        '
+        'SwitchAccountToolStripMenuItem
+        '
+        Me.SwitchAccountToolStripMenuItem.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SwitchAccountToolStripMenuItem.Image = CType(resources.GetObject("SwitchAccountToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.SwitchAccountToolStripMenuItem.Name = "SwitchAccountToolStripMenuItem"
+        Me.SwitchAccountToolStripMenuItem.Size = New System.Drawing.Size(226, 30)
+        Me.SwitchAccountToolStripMenuItem.Text = "Switch Account"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ExitToolStripMenuItem.Image = CType(resources.GetObject("ExitToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(226, 30)
+        Me.ExitToolStripMenuItem.Text = "Exit"
+        '
+        'ApplicantMasterlistToolStripMenuItem
+        '
+        Me.ApplicantMasterlistToolStripMenuItem.Image = CType(resources.GetObject("ApplicantMasterlistToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.ApplicantMasterlistToolStripMenuItem.Name = "ApplicantMasterlistToolStripMenuItem"
+        Me.ApplicantMasterlistToolStripMenuItem.Size = New System.Drawing.Size(244, 32)
+        Me.ApplicantMasterlistToolStripMenuItem.Text = "Applicant Masterlist"
+        '
+        'MRFMonitoringToolStripMenuItem
+        '
+        Me.MRFMonitoringToolStripMenuItem.Image = CType(resources.GetObject("MRFMonitoringToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.MRFMonitoringToolStripMenuItem.Name = "MRFMonitoringToolStripMenuItem"
+        Me.MRFMonitoringToolStripMenuItem.Size = New System.Drawing.Size(206, 32)
+        Me.MRFMonitoringToolStripMenuItem.Text = "MRF Monitoring"
+        '
+        'AboutUsToolStripMenuItem
+        '
+        Me.AboutUsToolStripMenuItem.Image = CType(resources.GetObject("AboutUsToolStripMenuItem.Image"), System.Drawing.Image)
+        Me.AboutUsToolStripMenuItem.Name = "AboutUsToolStripMenuItem"
+        Me.AboutUsToolStripMenuItem.Size = New System.Drawing.Size(131, 32)
+        Me.AboutUsToolStripMenuItem.Text = "About us"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 742)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(1366, 26)
+        Me.StatusStrip1.TabIndex = 5
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(450, 21)
+        Me.ToolStripStatusLabel1.Spring = True
+        Me.ToolStripStatusLabel1.Text = "Name of User"
+        '
+        'ToolStripStatusLabel2
+        '
+        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(450, 21)
+        Me.ToolStripStatusLabel2.Spring = True
+        Me.ToolStripStatusLabel2.Text = "Applicant Tracking System v1.0"
+        '
+        'ToolStripStatusLabel3
+        '
+        Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(450, 21)
+        Me.ToolStripStatusLabel3.Spring = True
+        Me.ToolStripStatusLabel3.Text = "Date and Time"
         '
         'frmMain
         '
@@ -284,36 +170,38 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1366, 768)
         Me.Controls.Add(Me.Panel2)
-        Me.Controls.Add(Me.Menupanel)
+        Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmMain"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picProfile, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Menupanel.ResumeLayout(False)
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents btnClose As Button
-    Friend WithEvents Menupanel As Panel
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Button7 As Button
-    Friend WithEvents lblUserRole As Label
-    Friend WithEvents Button5 As Button
-    Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents picProfile As PictureBox
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button6 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button8 As Button
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents MenuToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ProfileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SettingsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SwitchAccountToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ApplicantMasterlistToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MRFMonitoringToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
+    Friend WithEvents AboutUsToolStripMenuItem As ToolStripMenuItem
 End Class

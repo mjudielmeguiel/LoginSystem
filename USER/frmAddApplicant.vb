@@ -4,13 +4,13 @@ Imports MySql.Data.MySqlClient
 
 Public Class frmAddApplicant
 
+    ' Properties to determine if the form is in Add or Edit mode
+    Public Property IsEditMode As Boolean = False
+    Public Property ApplicantIDToEdit As Integer = 0
+
     Private isUpdatingCheckboxes As Boolean = False
 
     Private Sub frmAddApplicant_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Clear and hide error labels on form load
-        ClearErrorLabels()
-
-        ' Populate Status Dropdown Options
         cboCurrentStatus.Items.Clear()
         cboCurrentStatus.Items.Add("-- Select Status --")
         cboCurrentStatus.Items.AddRange(New String() {
@@ -20,15 +20,153 @@ Public Class frmAddApplicant
         })
         cboCurrentStatus.SelectedIndex = 0
 
-        ' Load Database-backed Dropdowns
+        InitializeRequirementsCheckedListBox()
+        InitializeStatusHistoryListView()
+
         LoadPositions()
         LoadSites()
         LoadSources()
+
+        ' Adjust UI labels based on whether we are adding or updating
+        If IsEditMode Then
+            If Me.Controls.ContainsKey("lblTitle") Then
+                DirectCast(Me.Controls("lblTitle"), Label).Text = "Update Applicant Information"
+            End If
+            Me.Text = "Update Applicant"
+            btnSave.Text = "Update"
+            LoadApplicantDataForEditing()
+        Else
+            If Me.Controls.ContainsKey("lblTitle") Then
+                DirectCast(Me.Controls("lblTitle"), Label).Text = "Add New Applicant"
+            End If
+            Me.Text = "Add Applicant"
+            btnSave.Text = "Save"
+            If lvStatusHistory IsNot Nothing Then lvStatusHistory.Visible = False ' Hide history for new entries
+        End If
     End Sub
 
-    ' -------------------------------------------------------------
-    ' DROPDOWN DATA LOADERS (WITH ID BINDING & PLACEHOLDERS)
-    ' -------------------------------------------------------------
+    Private Sub InitializeRequirementsCheckedListBox()
+        If clbRequirements IsNot Nothing Then
+            clbRequirements.Items.Clear()
+            clbRequirements.Items.Add("Barangay Clearance")
+            clbRequirements.Items.Add("Police Clearance")
+            clbRequirements.Items.Add("NBI Clearance")
+            clbRequirements.Items.Add("SSS")
+            clbRequirements.Items.Add("PhilHealth")
+            clbRequirements.Items.Add("Pag-IBIG")
+            clbRequirements.Items.Add("TIN")
+            clbRequirements.Items.Add("Medical")
+            clbRequirements.Items.Add("Diploma")
+            clbRequirements.Items.Add("TOR")
+        End If
+    End Sub
+
+    Private Sub InitializeStatusHistoryListView()
+        If lvStatusHistory IsNot Nothing Then
+            lvStatusHistory.View = View.Details
+            lvStatusHistory.FullRowSelect = True
+            lvStatusHistory.GridLines = True
+            lvStatusHistory.Columns.Clear()
+            lvStatusHistory.Columns.Add("Process / Milestone", 180, HorizontalAlignment.Left)
+            lvStatusHistory.Columns.Add("Date Updated", 140, HorizontalAlignment.Left)
+        End If
+    End Sub
+
+    Private Sub LoadApplicantDataForEditing()
+        Call connection()
+        If cn.State <> ConnectionState.Open Then Exit Sub
+
+        Try
+            sql = "SELECT * FROM applicant_masterlist WHERE ApplicantID = @id"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@id", ApplicantIDToEdit)
+            Dim adapter As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable()
+            adapter.Fill(dt)
+
+            If dt.Rows.Count > 0 Then
+                Dim row As DataRow = dt.Rows(0)
+
+                txtname.Text = If(row("NAME") Is DBNull.Value, "", row("NAME").ToString())
+                cboPosition.Text = If(row("POSITION") Is DBNull.Value, "", row("POSITION").ToString())
+                txtContactNo.Text = If(row("CONTACT_NO") Is DBNull.Value, "", row("CONTACT_NO").ToString())
+                txtEmail.Text = If(row("EMAIL_ADDRESS") Is DBNull.Value, "", row("EMAIL_ADDRESS").ToString())
+                rchAddress.Text = If(row("ADDRESS") Is DBNull.Value, "", row("ADDRESS").ToString())
+                cboSite.Text = If(row("SITE") Is DBNull.Value, "", row("SITE").ToString())
+                cboSource.Text = If(row("SOURCE") Is DBNull.Value, "", row("SOURCE").ToString())
+                cboCurrentStatus.Text = If(row("CURRENT_STATUS") Is DBNull.Value, "-- Select Status --", row("CURRENT_STATUS").ToString())
+                txtRemarks.Text = If(row("REMARKS") Is DBNull.Value, "", row("REMARKS").ToString())
+
+                ' CheckedListBox state mapping
+                SetItemCheckedStatus("Barangay Clearance", row("BARANGAY_CLEARANCE").ToString() = "Submitted")
+                SetItemCheckedStatus("Police Clearance", row("POLICE_CLEARANCE").ToString() = "Submitted")
+                SetItemCheckedStatus("NBI Clearance", row("NBI").ToString() = "Submitted")
+                SetItemCheckedStatus("SSS", row("SSS").ToString() = "Submitted")
+                SetItemCheckedStatus("PhilHealth", row("PHILHEALTH").ToString() = "Submitted")
+                SetItemCheckedStatus("Pag-IBIG", row("PAGIBIG").ToString() = "Submitted")
+                SetItemCheckedStatus("TIN", row("TIN").ToString() = "Submitted")
+                SetItemCheckedStatus("Medical", row("MEDICAL").ToString() = "Submitted")
+                SetItemCheckedStatus("Diploma", row("DIPLOMA").ToString() = "Submitted")
+                SetItemCheckedStatus("TOR", row("TOR").ToString() = "Submitted")
+
+                CheckMasterRequirementsState()
+
+                ' Populate Status History ListView showing both filled dates and Pending steps
+                If lvStatusHistory IsNot Nothing Then
+                    lvStatusHistory.Items.Clear()
+                    lvStatusHistory.Visible = True
+
+                    AddDateToHistory("Date Applied", row("DATE"))
+                    AddDateToHistory("Screened", row("DATE_SCREENED"))
+                    AddDateToHistory("Final Interview", row("FINAL_INTERVIEW_DATE"))
+                    AddDateToHistory("Job Offer", row("JOB_OFFER_DATE"))
+                    AddDateToHistory("Hired", row("DATE_HIRED"))
+                    AddDateToHistory("Deployed", row("DATE_DEPLOYED"))
+                    AddDateToHistory("Rejected", row("REJECTED_DATE"))
+                    AddDateToHistory("Backout", row("BACKOUT_DATE"))
+                    AddDateToHistory("Requirements Complete", row("REQUIREMENTS_COMPLETION_DATE"))
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("Error loading applicant details: " & ex.Message, MsgBoxStyle.Critical)
+        Finally
+            Call DBconnection.CloseConnection()
+        End Try
+    End Sub
+
+    Private Sub SetItemCheckedStatus(itemName As String, isChecked As Boolean)
+        If clbRequirements IsNot Nothing Then
+            Dim index As Integer = clbRequirements.Items.IndexOf(itemName)
+            If index <> -1 Then
+                clbRequirements.SetItemChecked(index, isChecked)
+            End If
+        End If
+    End Sub
+
+    Private Function IsRequirementChecked(itemName As String) As Boolean
+        If clbRequirements IsNot Nothing Then
+            Dim index As Integer = clbRequirements.Items.IndexOf(itemName)
+            If index <> -1 Then
+                Return clbRequirements.GetItemChecked(index)
+            End If
+        End If
+        Return False
+    End Function
+
+    Private Sub AddDateToHistory(statusName As String, dbValue As Object)
+        Dim dateDisplay As String = "Pending"
+
+        If dbValue IsNot Nothing AndAlso dbValue IsNot DBNull.Value AndAlso Not String.IsNullOrWhiteSpace(dbValue.ToString()) Then
+            Dim parsedDate As DateTime
+            If DateTime.TryParse(dbValue.ToString(), parsedDate) Then
+                dateDisplay = parsedDate.ToString("yyyy-MM-dd")
+            End If
+        End If
+
+        Dim lvi As New ListViewItem(statusName)
+        lvi.SubItems.Add(dateDisplay)
+        lvStatusHistory.Items.Add(lvi)
+    End Sub
 
     Private Sub LoadPositions()
         Call connection()
@@ -40,7 +178,6 @@ Public Class frmAddApplicant
             Dim dt As New DataTable()
             adapter.Fill(dt)
 
-            ' Insert placeholder row at top
             Dim dr As DataRow = dt.NewRow()
             dr("position_id") = 0
             dr("position_title") = "-- Select Position --"
@@ -51,7 +188,6 @@ Public Class frmAddApplicant
             cboPosition.ValueMember = "position_id"
             cboPosition.SelectedIndex = 0
         Catch ex As Exception
-            ' Silent catch
         Finally
             Call DBconnection.CloseConnection()
         End Try
@@ -67,7 +203,6 @@ Public Class frmAddApplicant
             Dim dt As New DataTable()
             adapter.Fill(dt)
 
-            ' Insert placeholder row at top
             Dim dr As DataRow = dt.NewRow()
             dr("LocationID") = 0
             dr("Site") = "-- Select Site --"
@@ -78,7 +213,6 @@ Public Class frmAddApplicant
             cboSite.ValueMember = "LocationID"
             cboSite.SelectedIndex = 0
         Catch ex As Exception
-            ' Silent catch
         Finally
             Call DBconnection.CloseConnection()
         End Try
@@ -94,7 +228,6 @@ Public Class frmAddApplicant
             Dim dt As New DataTable()
             adapter.Fill(dt)
 
-            ' Insert placeholder row at top
             Dim dr As DataRow = dt.NewRow()
             dr("SourceID") = 0
             dr("SourceName") = "-- Select Source --"
@@ -105,108 +238,10 @@ Public Class frmAddApplicant
             cboSource.ValueMember = "SourceID"
             cboSource.SelectedIndex = 0
         Catch ex As Exception
-            ' Silent catch
         Finally
             Call DBconnection.CloseConnection()
         End Try
     End Sub
-
-    Private Sub ClearErrorLabels()
-        HideError(lblErrName)
-        HideError(lblErrPosition)
-        HideError(lblErrContact)
-        HideError(lblErrEmail)
-        HideError(lblErrAddress)
-        HideError(lblErrSite)
-        HideError(lblErrSource)
-        HideError(lblErrStatus)
-    End Sub
-
-    ' -------------------------------------------------------------
-    ' FORM VALIDATION (ON SAVE CLICK ONLY)
-    ' -------------------------------------------------------------
-
-    Private Function ValidateInputs() As Boolean
-        Dim isValid As Boolean = True
-        Dim emailPattern As String = "^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook|hotmail|icloud)\.com$"
-
-        ' Clear previous validation states
-        ClearErrorLabels()
-
-        ' 1. Name
-        If String.IsNullOrWhiteSpace(txtname.Text) Then
-            ShowError(lblErrName, "Name is required")
-            isValid = False
-        ElseIf Not Regex.IsMatch(txtname.Text.Trim(), "^[a-zA-Z\s\.\-]+$") Then
-            ShowError(lblErrName, "Invalid Name format")
-            isValid = False
-        End If
-
-        ' 2. Position
-        If cboPosition.SelectedIndex <= 0 OrElse String.IsNullOrWhiteSpace(cboPosition.Text) Then
-            ShowError(lblErrPosition, "Position is required")
-            isValid = False
-        End If
-
-        ' 3. Contact Number
-        If String.IsNullOrWhiteSpace(txtContactNo.Text) Then
-            ShowError(lblErrContact, "Contact number is required")
-            isValid = False
-        ElseIf Not Regex.IsMatch(txtContactNo.Text.Trim(), "^(09|\+639)\d{9}$") AndAlso Not Regex.IsMatch(txtContactNo.Text.Trim(), "^\d{7,12}$") Then
-            ShowError(lblErrContact, "Invalid contact number")
-            isValid = False
-        End If
-
-        ' 4. Email Address
-        If String.IsNullOrWhiteSpace(txtEmail.Text) Then
-            ShowError(lblErrEmail, "Email address is required")
-            isValid = False
-        ElseIf Not Regex.IsMatch(txtEmail.Text.Trim(), emailPattern, RegexOptions.IgnoreCase) Then
-            ShowError(lblErrEmail, "Must end in valid domain (e.g. @gmail.com)")
-            isValid = False
-        End If
-
-        ' 5. Current Address
-        If String.IsNullOrWhiteSpace(rchAddress.Text) OrElse rchAddress.Text.Trim().Length < 5 Then
-            ShowError(lblErrAddress, "Address is required")
-            isValid = False
-        End If
-
-        ' 6. Site
-        If cboSite.SelectedIndex <= 0 OrElse String.IsNullOrWhiteSpace(cboSite.Text) Then
-            ShowError(lblErrSite, "Site is required")
-            isValid = False
-        End If
-
-        ' 7. Source
-        If cboSource.SelectedIndex <= 0 OrElse String.IsNullOrWhiteSpace(cboSource.Text) Then
-            ShowError(lblErrSource, "Source is required")
-            isValid = False
-        End If
-
-        ' 8. Status
-        If cboCurrentStatus.SelectedIndex <= 0 OrElse String.IsNullOrWhiteSpace(cboCurrentStatus.Text) Then
-            ShowError(lblErrStatus, "Status is required")
-            isValid = False
-        End If
-
-        Return isValid
-    End Function
-
-    Private Sub ShowError(lbl As Label, msg As String)
-        lbl.Text = msg
-        lbl.ForeColor = Color.Red
-        lbl.Visible = True
-    End Sub
-
-    Private Sub HideError(lbl As Label)
-        lbl.Text = ""
-        lbl.Visible = False
-    End Sub
-
-    ' -------------------------------------------------------------
-    ' CHECKBOX LOGIC
-    ' -------------------------------------------------------------
 
     Private Sub chkCompleteRequirements_CheckedChanged(sender As Object, e As EventArgs) Handles chkCompleteRequirements.CheckedChanged
         If isUpdatingCheckboxes Then Exit Sub
@@ -214,50 +249,112 @@ Public Class frmAddApplicant
         isUpdatingCheckboxes = True
         Dim state As Boolean = chkCompleteRequirements.Checked
 
-        chkBarangay.Checked = state
-        chkPolice.Checked = state
-        chkNBI.Checked = state
-        chkSSS.Checked = state
-        chkPhilhealth.Checked = state
-        chkPagibig.Checked = state
-        chkTIN.Checked = state
-        chkMedical.Checked = state
-        chkDiploma.Checked = state
-        chkTOR.Checked = state
+        If clbRequirements IsNot Nothing Then
+            For i As Integer = 0 To clbRequirements.Items.Count - 1
+                clbRequirements.SetItemChecked(i, state)
+            Next
+        End If
 
         isUpdatingCheckboxes = False
     End Sub
 
-    Private Sub IndividualRequirement_CheckedChanged(sender As Object, e As EventArgs) Handles _
-        chkBarangay.CheckedChanged, chkPolice.CheckedChanged, chkNBI.CheckedChanged,
-        chkSSS.CheckedChanged, chkPhilhealth.CheckedChanged, chkPagibig.CheckedChanged,
-        chkTIN.CheckedChanged, chkMedical.CheckedChanged, chkDiploma.CheckedChanged, chkTOR.CheckedChanged
-
+    Private Sub clbRequirements_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles clbRequirements.ItemCheck
         If isUpdatingCheckboxes Then Exit Sub
 
-        isUpdatingCheckboxes = True
+        Me.BeginInvoke(New Action(AddressOf CheckMasterRequirementsState))
+    End Sub
 
-        Dim allChecked As Boolean = chkBarangay.Checked AndAlso chkPolice.Checked AndAlso chkNBI.Checked AndAlso
-                                   chkSSS.Checked AndAlso chkPhilhealth.Checked AndAlso chkPagibig.Checked AndAlso
-                                   chkTIN.Checked AndAlso chkMedical.Checked AndAlso chkDiploma.Checked AndAlso chkTOR.Checked
+    Private Sub CheckMasterRequirementsState()
+        If clbRequirements Is Nothing OrElse chkCompleteRequirements Is Nothing Then Exit Sub
+
+        isUpdatingCheckboxes = True
+        Dim allChecked As Boolean = True
+
+        For i As Integer = 0 To clbRequirements.Items.Count - 1
+            If Not clbRequirements.GetItemChecked(i) Then
+                allChecked = False
+                Exit For
+            End If
+        Next
 
         chkCompleteRequirements.Checked = allChecked
         isUpdatingCheckboxes = False
     End Sub
 
-    Private Function GetReqStatus(chk As CheckBox) As String
-        Return If(chk.Checked, "Submitted", "Pending")
+    Private Function GetReqStatus(itemName As String) As String
+        Return If(IsRequirementChecked(itemName), "Submitted", "Pending")
     End Function
 
-    ' -------------------------------------------------------------
-    ' SAVE BUTTON
-    ' -------------------------------------------------------------
+    Private Function FormatInput(value As String) As String
+        If String.IsNullOrWhiteSpace(value) Then
+            Return "N/A"
+        End If
+        Return value.Trim()
+    End Function
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-
-        ' Validates form only when Save is clicked
-        If Not ValidateInputs() Then
+        ' --- VALIDATIONS ---
+        If cboPosition.SelectedIndex <= 0 Then
+            MsgBox("Please select a valid position.", MsgBoxStyle.Exclamation, "Validation Error")
+            cboPosition.Focus()
             Exit Sub
+        End If
+
+        If cboSource.SelectedIndex <= 0 Then
+            MsgBox("Please select a valid source.", MsgBoxStyle.Exclamation, "Validation Error")
+            cboSource.Focus()
+            Exit Sub
+        End If
+
+        ' Calculate requirements submitted count from CheckedListBox
+        Dim submittedCount As Integer = 0
+        Dim missingRequirements As New List(Of String)()
+
+        For i As Integer = 0 To clbRequirements.Items.Count - 1
+            Dim reqName As String = clbRequirements.Items(i).ToString()
+            If clbRequirements.GetItemChecked(i) Then
+                submittedCount += 1
+            Else
+                missingRequirements.Add(reqName)
+            End If
+        Next
+        Dim isAllRequirementsChecked As Boolean = (submittedCount = clbRequirements.Items.Count)
+
+        ' Check if requirements are complete when status is Hired or Deployed
+        Dim selectedStatus As String = cboCurrentStatus.Text.Trim()
+        If selectedStatus.Equals("Hired", StringComparison.OrdinalIgnoreCase) OrElse selectedStatus.Equals("Deployed", StringComparison.OrdinalIgnoreCase) Then
+            If Not isAllRequirementsChecked Then
+                MsgBox("Cannot set status to '" & selectedStatus & "' because applicant requirements are not complete (100%).", MsgBoxStyle.Critical, "Requirements Incomplete")
+                Exit Sub
+            End If
+        End If
+
+        ' --- AUTOMATED REMARKS GENERATION ---
+        Dim currentRemarksUserTyped As String = txtRemarks.Text.Trim()
+        Dim autoRemarkTag As String = ""
+
+        ' 1. Check for Missing Requirements
+        If Not isAllRequirementsChecked Then
+            autoRemarkTag &= "[Pending Requirements: " & String.Join(", ", missingRequirements) & "]"
+        Else
+            autoRemarkTag &= "[Requirements Complete: 100%]"
+        End If
+
+        ' 2. Check for Backout or Rejected Status Notes
+        If selectedStatus.Equals("Rejected", StringComparison.OrdinalIgnoreCase) Then
+            autoRemarkTag &= " [Applicant Rejected on " & DateTime.Now.ToString("yyyy-MM-dd") & "]"
+        ElseIf selectedStatus.Equals("Backout", StringComparison.OrdinalIgnoreCase) Then
+            autoRemarkTag &= " [Applicant Backed Out on " & DateTime.Now.ToString("yyyy-MM-dd") & "]"
+        End If
+
+        ' Combine user remarks responsively without duplicates
+        Dim finalRemarksToSave As String = currentRemarksUserTyped
+        If Not finalRemarksToSave.Contains(autoRemarkTag) Then
+            If String.IsNullOrEmpty(finalRemarksToSave) OrElse finalRemarksToSave = "N/A" Then
+                finalRemarksToSave = autoRemarkTag
+            Else
+                finalRemarksToSave &= " | " & autoRemarkTag
+            End If
         End If
 
         Call connection()
@@ -267,51 +364,85 @@ Public Class frmAddApplicant
         End If
 
         Try
-            sql = "INSERT INTO applicant_masterlist (" &
-                  "NAME, POSITION, CONTACT_NO, EMAIL_ADDRESS, ADDRESS, SITE, SOURCE, CURRENT_STATUS, " &
-                  "BARANGAY_CLEARANCE, POLICE_CLEARANCE, NBI, SSS, PHILHEALTH, PAGIBIG, TIN, MEDICAL, DIPLOMA, TOR, REMARKS) " &
-                  "VALUES (" &
-                  "@name, @position, @contact, @email, @address, @site, @source, @status, " &
-                  "@brgy, @police, @nbi, @sss, @philhealth, @pagibig, @tin, @medical, @diploma, @tor, @remarks)"
+            Dim reqPercentage As String = (submittedCount * 10).ToString() & "%"
+
+            If IsEditMode Then
+                ' Execute UPDATE if editing an existing applicant
+                sql = "UPDATE applicant_masterlist SET " &
+                      "NAME = @name, POSITION = @position, CONTACT_NO = @contact, EMAIL_ADDRESS = @email, " &
+                      "ADDRESS = @address, SITE = @site, SOURCE = @source, CURRENT_STATUS = @status, " &
+                      "BARANGAY_CLEARANCE = @brgy, POLICE_CLEARANCE = @police, NBI = @nbi, SSS = @sss, " &
+                      "PHILHEALTH = @philhealth, PAGIBIG = @pagibig, TIN = @tin, MEDICAL = @medical, " &
+                      "DIPLOMA = @diploma, TOR = @tor, REQUIREMENTS_PERCENTAGE = @reqPct, REMARKS = @remarks"
+
+                If selectedStatus.Equals("Screened", StringComparison.OrdinalIgnoreCase) Then sql &= ", DATE_SCREENED = IF(DATE_SCREENED IS NULL, CURDATE(), DATE_SCREENED)"
+                If selectedStatus.Equals("Final Interview", StringComparison.OrdinalIgnoreCase) Then sql &= ", FINAL_INTERVIEW_DATE = IF(FINAL_INTERVIEW_DATE IS NULL, CURDATE(), FINAL_INTERVIEW_DATE)"
+                If selectedStatus.Equals("Job Offer", StringComparison.OrdinalIgnoreCase) Then sql &= ", JOB_OFFER_DATE = IF(JOB_OFFER_DATE IS NULL, CURDATE(), JOB_OFFER_DATE)"
+                If selectedStatus.Equals("Hired", StringComparison.OrdinalIgnoreCase) Then sql &= ", DATE_HIRED = IF(DATE_HIRED IS NULL, CURDATE(), DATE_HIRED)"
+                If selectedStatus.Equals("Deployed", StringComparison.OrdinalIgnoreCase) Then sql &= ", DATE_DEPLOYED = IF(DATE_DEPLOYED IS NULL, CURDATE(), DATE_DEPLOYED)"
+                If selectedStatus.Equals("Rejected", StringComparison.OrdinalIgnoreCase) Then sql &= ", REJECTED_DATE = IF(REJECTED_DATE IS NULL, CURDATE(), REJECTED_DATE)"
+                If selectedStatus.Equals("Backout", StringComparison.OrdinalIgnoreCase) Then sql &= ", BACKOUT_DATE = IF(BACKOUT_DATE IS NULL, CURDATE(), BACKOUT_DATE)"
+                If submittedCount = clbRequirements.Items.Count Then sql &= ", REQUIREMENTS_COMPLETION_DATE = IF(REQUIREMENTS_COMPLETION_DATE IS NULL, CURDATE(), REQUIREMENTS_COMPLETION_DATE)"
+
+                sql &= " WHERE ApplicantID = @id"
+            Else
+                ' Execute INSERT if adding a new applicant
+                sql = "INSERT INTO applicant_masterlist (" &
+                      "NAME, POSITION, CONTACT_NO, EMAIL_ADDRESS, ADDRESS, SITE, SOURCE, CURRENT_STATUS, " &
+                      "BARANGAY_CLEARANCE, POLICE_CLEARANCE, NBI, SSS, PHILHEALTH, PAGIBIG, TIN, MEDICAL, DIPLOMA, TOR, REQUIREMENTS_PERCENTAGE, REMARKS, " &
+                      "DATE_SCREENED, FINAL_INTERVIEW_DATE, JOB_OFFER_DATE, DATE_HIRED, DATE_DEPLOYED, REJECTED_DATE, BACKOUT_DATE, REQUIREMENTS_COMPLETION_DATE) " &
+                      "VALUES (" &
+                      "@name, @position, @contact, @email, @address, @site, @source, @status, " &
+                      "@brgy, @police, @nbi, @sss, @philhealth, @pagibig, @tin, @medical, @diploma, @tor, @reqPct, @remarks, " &
+                      "IF(@status = 'Screened', CURDATE(), NULL), " &
+                      "IF(@status = 'Final Interview', CURDATE(), NULL), " &
+                      "IF(@status = 'Job Offer', CURDATE(), NULL), " &
+                      "IF(@status = 'Hired', CURDATE(), NULL), " &
+                      "IF(@status = 'Deployed', CURDATE(), NULL), " &
+                      "IF(@status = 'Rejected', CURDATE(), NULL), " &
+                      "IF(@status = 'Backout', CURDATE(), NULL), " &
+                      "IF(@reqPct = '100%', CURDATE(), NULL))"
+            End If
 
             cmd = New MySqlCommand(sql, cn)
 
             With cmd.Parameters
-                .AddWithValue("@name", txtname.Text.Trim())
+                If IsEditMode Then
+                    .AddWithValue("@id", ApplicantIDToEdit)
+                End If
+                .AddWithValue("@name", FormatInput(txtname.Text))
                 .AddWithValue("@position", cboPosition.Text.Trim())
-                .AddWithValue("@contact", txtContactNo.Text.Trim())
-                .AddWithValue("@email", txtEmail.Text.Trim().ToLower())
-                .AddWithValue("@address", rchAddress.Text.Trim())
+                .AddWithValue("@contact", FormatInput(txtContactNo.Text))
+                .AddWithValue("@email", FormatInput(txtEmail.Text).ToLower())
+                .AddWithValue("@address", FormatInput(rchAddress.Text))
                 .AddWithValue("@site", cboSite.Text.Trim())
                 .AddWithValue("@source", cboSource.Text.Trim())
-                .AddWithValue("@status", cboCurrentStatus.Text.Trim())
+                .AddWithValue("@status", selectedStatus)
 
-                .AddWithValue("@brgy", GetReqStatus(chkBarangay))
-                .AddWithValue("@police", GetReqStatus(chkPolice))
-                .AddWithValue("@nbi", GetReqStatus(chkNBI))
-                .AddWithValue("@sss", GetReqStatus(chkSSS))
-                .AddWithValue("@philhealth", GetReqStatus(chkPhilhealth))
-                .AddWithValue("@pagibig", GetReqStatus(chkPagibig))
-                .AddWithValue("@tin", GetReqStatus(chkTIN))
-                .AddWithValue("@medical", GetReqStatus(chkMedical))
-                .AddWithValue("@diploma", GetReqStatus(chkDiploma))
-                .AddWithValue("@tor", GetReqStatus(chkTOR))
+                .AddWithValue("@brgy", GetReqStatus("Barangay Clearance"))
+                .AddWithValue("@police", GetReqStatus("Police Clearance"))
+                .AddWithValue("@nbi", GetReqStatus("NBI Clearance"))
+                .AddWithValue("@sss", GetReqStatus("SSS"))
+                .AddWithValue("@philhealth", GetReqStatus("PhilHealth"))
+                .AddWithValue("@pagibig", GetReqStatus("Pag-IBIG"))
+                .AddWithValue("@tin", GetReqStatus("TIN"))
+                .AddWithValue("@medical", GetReqStatus("Medical"))
+                .AddWithValue("@diploma", GetReqStatus("Diploma"))
+                .AddWithValue("@tor", GetReqStatus("TOR"))
+                .AddWithValue("@reqPct", reqPercentage)
 
-                .AddWithValue("@remarks", txtRemarks.Text.Trim())
+                .AddWithValue("@remarks", finalRemarksToSave)
             End With
 
             cmd.ExecuteNonQuery()
 
-            MsgBox("Applicant added successfully!", MsgBoxStyle.Information, "Success")
-
-            If Application.OpenForms.OfType(Of frmApplicantList)().Any() Then
-                frmApplicantList.LoadApplicants()
-            End If
+            Dim successMsg As String = If(IsEditMode, "Applicant updated successfully!", "Applicant added successfully!")
+            MsgBox(successMsg, MsgBoxStyle.Information, "Success")
 
             Me.Close()
 
         Catch ex As Exception
-            MsgBox("Error adding applicant: " & ex.Message, MsgBoxStyle.Critical, "Database Error")
+            MsgBox("Error saving applicant: " & ex.Message, MsgBoxStyle.Critical, "Database Error")
         Finally
             Call DBconnection.CloseConnection()
         End Try
