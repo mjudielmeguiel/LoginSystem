@@ -32,21 +32,17 @@ Partial Class frmlogin
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.lblAttempts = New System.Windows.Forms.Label()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.btnShowPass = New System.Windows.Forms.Button()
         Me.lblError = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.btnClose = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtUsername
         '
         Me.txtUsername.BackColor = System.Drawing.SystemColors.Control
         Me.txtUsername.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUsername.Location = New System.Drawing.Point(371, 274)
+        Me.txtUsername.Location = New System.Drawing.Point(31, 215)
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtUsername.Size = New System.Drawing.Size(365, 28)
@@ -58,7 +54,7 @@ Partial Class frmlogin
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel2.LinkColor = System.Drawing.Color.DarkBlue
-        Me.LinkLabel2.Location = New System.Drawing.Point(450, 366)
+        Me.LinkLabel2.Location = New System.Drawing.Point(110, 307)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(47, 16)
         Me.LinkLabel2.TabIndex = 138
@@ -73,7 +69,7 @@ Partial Class frmlogin
         Me.btnlogin.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnlogin.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.btnlogin.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnlogin.Location = New System.Drawing.Point(371, 447)
+        Me.btnlogin.Location = New System.Drawing.Point(31, 388)
         Me.btnlogin.Name = "btnlogin"
         Me.btnlogin.Size = New System.Drawing.Size(365, 37)
         Me.btnlogin.TabIndex = 134
@@ -85,7 +81,7 @@ Partial Class frmlogin
         '
         Me.txtPassword.BackColor = System.Drawing.SystemColors.Control
         Me.txtPassword.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPassword.Location = New System.Drawing.Point(371, 335)
+        Me.txtPassword.Location = New System.Drawing.Point(31, 276)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.txtPassword.Size = New System.Drawing.Size(365, 28)
@@ -95,7 +91,7 @@ Partial Class frmlogin
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(368, 366)
+        Me.Label1.Location = New System.Drawing.Point(28, 307)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(76, 16)
         Me.Label1.TabIndex = 141
@@ -105,7 +101,7 @@ Partial Class frmlogin
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(366, 148)
+        Me.Label4.Location = New System.Drawing.Point(26, 89)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(78, 26)
         Me.Label4.TabIndex = 146
@@ -115,7 +111,7 @@ Partial Class frmlogin
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft YaHei UI Light", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(352, 616)
+        Me.Label5.Location = New System.Drawing.Point(12, 557)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(271, 17)
         Me.Label5.TabIndex = 147
@@ -125,20 +121,10 @@ Partial Class frmlogin
         '
         Me.lblAttempts.AutoSize = True
         Me.lblAttempts.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAttempts.Location = New System.Drawing.Point(659, 363)
+        Me.lblAttempts.Location = New System.Drawing.Point(319, 304)
         Me.lblAttempts.Name = "lblAttempts"
         Me.lblAttempts.Size = New System.Drawing.Size(0, 19)
         Me.lblAttempts.TabIndex = 148
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(493, 41)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(92, 84)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox2.TabIndex = 149
-        Me.PictureBox2.TabStop = False
         '
         'btnShowPass
         '
@@ -149,7 +135,7 @@ Partial Class frmlogin
         Me.btnShowPass.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnShowPass.ForeColor = System.Drawing.Color.Maroon
         Me.btnShowPass.Image = CType(resources.GetObject("btnShowPass.Image"), System.Drawing.Image)
-        Me.btnShowPass.Location = New System.Drawing.Point(701, 339)
+        Me.btnShowPass.Location = New System.Drawing.Point(361, 280)
         Me.btnShowPass.Name = "btnShowPass"
         Me.btnShowPass.Size = New System.Drawing.Size(29, 22)
         Me.btnShowPass.TabIndex = 144
@@ -161,7 +147,7 @@ Partial Class frmlogin
         '
         Me.lblError.AutoSize = True
         Me.lblError.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblError.Location = New System.Drawing.Point(368, 249)
+        Me.lblError.Location = New System.Drawing.Point(28, 190)
         Me.lblError.Name = "lblError"
         Me.lblError.Size = New System.Drawing.Size(12, 16)
         Me.lblError.TabIndex = 150
@@ -179,7 +165,7 @@ Partial Class frmlogin
         Me.btnClose.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnClose.ForeColor = System.Drawing.Color.DarkBlue
         Me.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnClose.Location = New System.Drawing.Point(371, 490)
+        Me.btnClose.Location = New System.Drawing.Point(31, 431)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(365, 37)
         Me.btnClose.TabIndex = 151
@@ -187,24 +173,13 @@ Partial Class frmlogin
         Me.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnClose.UseVisualStyleBackColor = False
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 12)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(334, 618)
-        Me.PictureBox1.TabIndex = 175
-        Me.PictureBox1.TabStop = False
-        '
         'frmlogin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(762, 642)
-        Me.Controls.Add(Me.PictureBox1)
+        Me.ClientSize = New System.Drawing.Size(429, 583)
         Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.lblError)
-        Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.lblAttempts)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
@@ -219,8 +194,6 @@ Partial Class frmlogin
         Me.Name = "frmlogin"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmlogin"
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -233,10 +206,8 @@ Partial Class frmlogin
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents lblAttempts As Label
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents btnShowPass As Button
     Friend WithEvents lblError As Label
     Friend WithEvents Timer1 As Timer
     Friend WithEvents btnClose As Button
-    Friend WithEvents PictureBox1 As PictureBox
 End Class

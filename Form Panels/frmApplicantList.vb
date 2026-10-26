@@ -5,6 +5,9 @@ Imports Excel = Microsoft.Office.Interop.Excel
 
 Public Class frmApplicantList
 
+    ' --- FIX ADDED: Programmatic timer to prevent database spam on every keystroke ---
+    Private WithEvents SearchTimer As New Timer() With {.Interval = 400}
+
     Private Sub frmApplicantList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lblScreened.Tag = "Screened"
         lblHRAvatar.Tag = "HR Avatar"
@@ -99,6 +102,8 @@ Public Class frmApplicantList
                 End If
             Next
         Catch ex As Exception
+            ' --- FIX ADDED: Alert user instead of failing silently ---
+            MsgBox("Error updating status counts: " & ex.Message, MsgBoxStyle.Critical)
         Finally
             CloseConnection()
         End Try
@@ -416,9 +421,14 @@ Public Class frmApplicantList
             CloseConnection()
             If xlWorkBook IsNot Nothing Then xlWorkBook.Close(False)
             If xlApp IsNot Nothing Then xlApp.Quit()
-            ReleaseObject(xlApp)
-            ReleaseObject(xlWorkBook)
+
             ReleaseObject(xlWorkSheet)
+            ReleaseObject(xlWorkBook)
+            ReleaseObject(xlApp)
+
+            ' --- FIX ADDED: Force Garbage Collection to kill invisible Excel.exe process in Task Manager ---
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
         End Try
     End Sub
 
@@ -529,7 +539,15 @@ Public Class frmApplicantList
         End If
     End Sub
 
+    ' --- FIX ADDED: Triggers the timer instead of spamming DB immediately ---
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        SearchTimer.Stop()
+        SearchTimer.Start()
+    End Sub
+
+    ' --- FIX ADDED: Timer tick executes DB query once user stops typing ---
+    Private Sub SearchTimer_Tick(sender As Object, e As EventArgs) Handles SearchTimer.Tick
+        SearchTimer.Stop()
         RefreshData()
     End Sub
 
@@ -592,6 +610,8 @@ Public Class frmApplicantList
         End If
     End Sub
 
+    ' Note: If you want to change the button name in the form designer later to btnAddApplicant, 
+    ' make sure to update the name here too!
     Private Sub btnReset_Click(sender As Object, e As EventArgs) Handles btnReset.Click
         frmAddApplicant.Show()
     End Sub
