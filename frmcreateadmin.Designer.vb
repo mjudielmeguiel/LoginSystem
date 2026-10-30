@@ -40,6 +40,8 @@ Partial Class frmcreateadmin
         Me.txtDepartment = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblPassStatus = New System.Windows.Forms.Label()
+        Me.txtEmail = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -63,7 +65,7 @@ Partial Class frmcreateadmin
         '
         Me.txtFirstname.BackColor = System.Drawing.SystemColors.Control
         Me.txtFirstname.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFirstname.Location = New System.Drawing.Point(623, 211)
+        Me.txtFirstname.Location = New System.Drawing.Point(623, 196)
         Me.txtFirstname.Name = "txtFirstname"
         Me.txtFirstname.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtFirstname.Size = New System.Drawing.Size(167, 28)
@@ -83,7 +85,7 @@ Partial Class frmcreateadmin
         '
         Me.txtLastname.BackColor = System.Drawing.SystemColors.Control
         Me.txtLastname.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtLastname.Location = New System.Drawing.Point(446, 211)
+        Me.txtLastname.Location = New System.Drawing.Point(446, 196)
         Me.txtLastname.Name = "txtLastname"
         Me.txtLastname.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtLastname.Size = New System.Drawing.Size(167, 28)
@@ -93,7 +95,7 @@ Partial Class frmcreateadmin
         '
         Me.txtUsername.BackColor = System.Drawing.SystemColors.Control
         Me.txtUsername.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUsername.Location = New System.Drawing.Point(446, 284)
+        Me.txtUsername.Location = New System.Drawing.Point(446, 269)
         Me.txtUsername.Name = "txtUsername"
         Me.txtUsername.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
         Me.txtUsername.Size = New System.Drawing.Size(344, 28)
@@ -103,7 +105,7 @@ Partial Class frmcreateadmin
         '
         Me.txtPassword.BackColor = System.Drawing.SystemColors.Control
         Me.txtPassword.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPassword.Location = New System.Drawing.Point(446, 364)
+        Me.txtPassword.Location = New System.Drawing.Point(446, 385)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.txtPassword.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
@@ -114,7 +116,7 @@ Partial Class frmcreateadmin
         '
         Me.txtConfirmPass.BackColor = System.Drawing.SystemColors.Control
         Me.txtConfirmPass.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtConfirmPass.Location = New System.Drawing.Point(446, 441)
+        Me.txtConfirmPass.Location = New System.Drawing.Point(446, 462)
         Me.txtConfirmPass.Name = "txtConfirmPass"
         Me.txtConfirmPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.txtConfirmPass.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
@@ -142,7 +144,7 @@ Partial Class frmcreateadmin
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(442, 189)
+        Me.Label1.Location = New System.Drawing.Point(442, 174)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(68, 19)
         Me.Label1.TabIndex = 149
@@ -152,7 +154,7 @@ Partial Class frmcreateadmin
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(619, 189)
+        Me.Label2.Location = New System.Drawing.Point(619, 174)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(69, 19)
         Me.Label2.TabIndex = 144
@@ -162,7 +164,7 @@ Partial Class frmcreateadmin
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(442, 262)
+        Me.Label3.Location = New System.Drawing.Point(442, 247)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(71, 19)
         Me.Label3.TabIndex = 151
@@ -172,7 +174,7 @@ Partial Class frmcreateadmin
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(442, 342)
+        Me.Label5.Location = New System.Drawing.Point(442, 363)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(67, 19)
         Me.Label5.TabIndex = 153
@@ -182,7 +184,7 @@ Partial Class frmcreateadmin
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(442, 419)
+        Me.Label6.Location = New System.Drawing.Point(442, 440)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(121, 19)
         Me.Label6.TabIndex = 155
@@ -221,17 +223,39 @@ Partial Class frmcreateadmin
         '
         Me.lblPassStatus.AutoSize = True
         Me.lblPassStatus.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPassStatus.Location = New System.Drawing.Point(669, 472)
+        Me.lblPassStatus.Location = New System.Drawing.Point(669, 493)
         Me.lblPassStatus.Name = "lblPassStatus"
         Me.lblPassStatus.Size = New System.Drawing.Size(15, 19)
         Me.lblPassStatus.TabIndex = 160
         Me.lblPassStatus.Text = "-"
+        '
+        'txtEmail
+        '
+        Me.txtEmail.BackColor = System.Drawing.SystemColors.Control
+        Me.txtEmail.Font = New System.Drawing.Font("Microsoft YaHei UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtEmail.Location = New System.Drawing.Point(446, 332)
+        Me.txtEmail.Name = "txtEmail"
+        Me.txtEmail.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal
+        Me.txtEmail.Size = New System.Drawing.Size(344, 28)
+        Me.txtEmail.TabIndex = 161
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(442, 310)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(41, 19)
+        Me.Label8.TabIndex = 162
+        Me.Label8.Text = "Email"
         '
         'frmcreateadmin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(858, 584)
+        Me.Controls.Add(Me.txtEmail)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.lblPassStatus)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.txtDepartment)
@@ -276,4 +300,6 @@ Partial Class frmcreateadmin
     Friend WithEvents txtDepartment As TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents lblPassStatus As Label
+    Friend WithEvents txtEmail As TextBox
+    Friend WithEvents Label8 As Label
 End Class

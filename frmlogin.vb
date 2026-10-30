@@ -1,8 +1,13 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Drawing.Drawing2D
+Imports MySql.Data.MySqlClient
 
 Public Class frmlogin
 
     Private Sub frmlogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ApplyEdgeStyle()
+        MakeButtonRounded(btnlogin, 6)
+        MakeButtonRounded(btnClose, 6)
+
         txtUsername.Text = "Please Enter your username"
         txtUsername.ForeColor = Color.DarkGray
         txtPassword.Text = "Please Enter your Password"
@@ -12,6 +17,66 @@ Public Class frmlogin
         lblAttempts.Text = "0"
     End Sub
 
+    ' -------------------------------------------------------------
+    ' STYLING & CORNER RADIUS
+    ' -------------------------------------------------------------
+    Private Sub ApplyEdgeStyle()
+        btnlogin.FlatStyle = FlatStyle.Flat
+        btnlogin.FlatAppearance.BorderSize = 0
+        btnlogin.BackColor = Color.FromArgb(0, 103, 184)
+        btnlogin.ForeColor = Color.White
+        btnlogin.Font = New Font("Segoe UI Semibold", 10.0!, FontStyle.Bold)
+        btnlogin.Cursor = Cursors.Hand
+
+        btnClose.FlatStyle = FlatStyle.Flat
+        btnClose.FlatAppearance.BorderSize = 1
+        btnClose.FlatAppearance.BorderColor = Color.FromArgb(200, 200, 200)
+        btnClose.BackColor = Color.White
+        btnClose.ForeColor = Color.FromArgb(32, 32, 32)
+        btnClose.Font = New Font("Segoe UI", 10.0!, FontStyle.Regular)
+        btnClose.Cursor = Cursors.Hand
+    End Sub
+
+    Private Sub MakeButtonRounded(btn As Button, radius As Integer)
+        Dim path As New GraphicsPath()
+        path.AddArc(0, 0, radius, radius, 180, 90)
+        path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)
+        path.AddArc(btn.Width - radius, btn.Height - radius, radius, radius, 0, 90)
+        path.AddArc(0, btn.Height - radius, radius, radius, 90, 90)
+        path.CloseAllFigures()
+        btn.Region = New Region(path)
+    End Sub
+
+    ' -------------------------------------------------------------
+    ' BUTTON HOVER EFFECTS
+    ' -------------------------------------------------------------
+    Private Sub btnlogin_MouseEnter(sender As Object, e As EventArgs) Handles btnlogin.MouseEnter
+        btnlogin.BackColor = Color.FromArgb(0, 90, 158)
+    End Sub
+
+    Private Sub btnlogin_MouseLeave(sender As Object, e As EventArgs) Handles btnlogin.MouseLeave
+        btnlogin.BackColor = Color.FromArgb(0, 103, 184)
+    End Sub
+
+    Private Sub btnlogin_MouseDown(sender As Object, e As MouseEventArgs) Handles btnlogin.MouseDown
+        btnlogin.BackColor = Color.FromArgb(0, 78, 137)
+    End Sub
+
+    Private Sub btnClose_MouseEnter(sender As Object, e As EventArgs) Handles btnClose.MouseEnter
+        btnClose.BackColor = Color.FromArgb(240, 240, 240)
+    End Sub
+
+    Private Sub btnClose_MouseLeave(sender As Object, e As EventArgs) Handles btnClose.MouseLeave
+        btnClose.BackColor = Color.White
+    End Sub
+
+    Private Sub btnClose_MouseDown(sender As Object, e As MouseEventArgs) Handles btnClose.MouseDown
+        btnClose.BackColor = Color.FromArgb(225, 225, 225)
+    End Sub
+
+    ' -------------------------------------------------------------
+    ' PLACEHOLDER & FOCUS LOGIC
+    ' -------------------------------------------------------------
     Private Sub txtUsername_GotFocus(sender As Object, e As EventArgs) Handles txtUsername.GotFocus
         lblError.Text = ""
         If txtUsername.Text = "Please Enter your username" Then
@@ -44,26 +109,27 @@ Public Class frmlogin
         End If
     End Sub
 
+    ' -------------------------------------------------------------
+    ' AUTHENTICATION LOGIC
+    ' -------------------------------------------------------------
     Private Sub checkifuserexist()
         connection()
         lblError.Text = ""
-        lblAttempts.Text = "0"
 
         If cn.State <> ConnectionState.Open Then
             lblError.Text = "Cannot connect to database!"
             Exit Sub
         End If
 
-        sql = "SELECT LoginAttempts, AccountStatus FROM users WHERE Username=@user"
+        ' Query 'users' table
+        sql = "SELECT Status FROM users WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         dr = cmd.ExecuteReader()
 
         If dr.Read() Then
-            lblAttempts.Text = If(IsDBNull(dr("LoginAttempts")), 0, dr("LoginAttempts")).ToString()
-
-            If dr("AccountStatus").ToString().Trim() = "Locked" Then
-                lblError.Text = "Your account is locked/deactivated."
+            If dr("Status").ToString().Trim() = "Inactive" Then
+                lblError.Text = "Your account is inactive/deactivated."
                 dr.Close()
                 CloseConnection()
                 Exit Sub
@@ -74,15 +140,9 @@ Public Class frmlogin
             Login()
         Else
             dr.Close()
-            CloseConnection()
 
-            connection()
-            If cn.State <> ConnectionState.Open Then
-                lblError.Text = "Cannot connect to database!"
-                Exit Sub
-            End If
-
-            sql = "SELECT AdminID FROM admin WHERE Username=@user"
+            ' Query 'admins' table
+            sql = "SELECT AdminID FROM admins WHERE Username=@user"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
             dr = cmd.ExecuteReader()
@@ -126,7 +186,7 @@ Public Class frmlogin
             Exit Sub
         End If
 
-        sql = "SELECT * FROM users WHERE Username=@user AND Password=@pass"
+        sql = "SELECT * FROM users WHERE Username=@user AND PasswordHash=@pass"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
@@ -138,7 +198,7 @@ Public Class frmlogin
             Dim currentUser As String = txtUsername.Text.Trim()
             dr.Close()
 
-            sql = "UPDATE users SET LoginAttempts=0, AccountStatus='Active' WHERE Username=@user"
+            sql = "UPDATE users SET Status='Active', UpdatedAt=NOW() WHERE Username=@user"
             cmd = New MySqlCommand(sql, cn)
             cmd.Parameters.AddWithValue("@user", currentUser)
             cmd.ExecuteNonQuery()
@@ -155,10 +215,8 @@ Public Class frmlogin
             currentAttempts += 1
             lblAttempts.Text = currentAttempts.ToString()
 
-            UpdateAttempts()
-
             If currentAttempts >= 3 Then
-                lblError.Text = "3 failed attempts reached. Account locked."
+                lblError.Text = "3 failed attempts reached. Account deactivated."
                 DeactAccts()
             Else
                 lblError.Text = $"✗ Incorrect Password. Attempt {currentAttempts} of 3."
@@ -177,7 +235,7 @@ Public Class frmlogin
             Exit Sub
         End If
 
-        sql = "SELECT * FROM admin WHERE Username=@user AND Password=@pass"
+        sql = "SELECT * FROM admins WHERE Username=@user AND PasswordHash=@pass"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.Parameters.AddWithValue("@pass", txtPassword.Text)
@@ -186,7 +244,14 @@ Public Class frmlogin
         If dr.Read() Then
             LoggedFullname = dr("FullName").ToString()
             LoggedRole = "Administrator"
+            Dim currentUser As String = txtUsername.Text.Trim()
             dr.Close()
+
+            sql = "UPDATE admins SET LastLogin=NOW() WHERE Username=@user"
+            cmd = New MySqlCommand(sql, cn)
+            cmd.Parameters.AddWithValue("@user", currentUser)
+            cmd.ExecuteNonQuery()
+
             CloseConnection()
 
             lblError.Text = "✓ Admin Login Success! Redirecting..."
@@ -205,21 +270,10 @@ Public Class frmlogin
         frmMain.Show()
     End Sub
 
-    Private Sub UpdateAttempts()
-        connection()
-        If cn.State <> ConnectionState.Open Then Exit Sub
-        sql = "UPDATE users SET LoginAttempts=@attempts WHERE Username=@user"
-        cmd = New MySqlCommand(sql, cn)
-        cmd.Parameters.AddWithValue("@attempts", lblAttempts.Text)
-        cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
-        cmd.ExecuteNonQuery()
-        CloseConnection()
-    End Sub
-
     Private Sub DeactAccts()
         connection()
         If cn.State <> ConnectionState.Open Then Exit Sub
-        sql = "UPDATE users SET AccountStatus='Locked' WHERE Username=@user"
+        sql = "UPDATE users SET Status='Inactive' WHERE Username=@user"
         cmd = New MySqlCommand(sql, cn)
         cmd.Parameters.AddWithValue("@user", txtUsername.Text.Trim())
         cmd.ExecuteNonQuery()
